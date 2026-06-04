@@ -5,16 +5,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Panamá 21K — Plan de Entrenamiento</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/twemoji@14.0.2/dist/twemoji.min.js" crossorigin="anonymous"></script>
 <style>
   :root {
-    --green: #2bbf8b;
-    --green-dark: #15825e;
-    --green-dim: #16382c;
-    --blue: #74a9ff;
-    --blue-dim: #17243d;
-    --amber: #f2bb6b;
-    --red: #ea7a8c;
-    --rose: #f7c4cf;
+    --green: #e98da6;
+    --green-dark: #c65d7b;
+    --green-dim: #4f2434;
+    --blue: #d7a2f2;
+    --blue-dim: #3e284f;
+    --amber: #f0b7c9;
+    --red: #d96b8e;
+    --rose: #f7c4d2;
     --pearl: #fff7f8;
     --bg: #f6efef;
     --surface: rgba(255, 255, 255, 0.78);
@@ -59,7 +60,7 @@
     right: -90px;
   }
   body::after {
-    background: radial-gradient(circle, rgba(116, 169, 255, 0.55), rgba(116, 169, 255, 0));
+    background: radial-gradient(circle, rgba(247, 196, 210, 0.6), rgba(247, 196, 210, 0));
     bottom: 16%;
     left: -100px;
   }
@@ -158,11 +159,11 @@
     font-weight: 500;
     letter-spacing: 0.5px;
   }
-  .pill-base { background: rgba(29,185,122,0.15); color: var(--green); }
-  .pill-dev { background: rgba(116,169,255,0.15); color: var(--blue); }
-  .pill-pico { background: rgba(247, 196, 207, 0.38); color: #d35d79; border: 1px solid rgba(247, 196, 207, 0.7); }
-  .pill-taper { background: rgba(242,187,107,0.18); color: #b57217; }
-  .pill-race { background: rgba(234,122,140,0.18); color: #b6455c; }
+  .pill-base { background: rgba(247, 196, 210, 0.34); color: var(--green-dark); }
+  .pill-dev { background: rgba(215,162,242,0.16); color: var(--blue); }
+  .pill-pico { background: rgba(247, 196, 210, 0.42); color: #c85d7f; border: 1px solid rgba(247, 196, 210, 0.8); }
+  .pill-taper { background: rgba(240,183,201,0.24); color: #b85a77; }
+  .pill-race { background: rgba(217,107,142,0.2); color: #a94967; }
 
   .overall-bar {
     background: rgba(255,255,255,0.72);
@@ -173,7 +174,7 @@
   .overall-fill {
     height: 100%;
     border-radius: 99px;
-    background: linear-gradient(90deg, #8a5cf6 0%, #ea7a8c 52%, #2bbf8b 100%);
+    background: linear-gradient(90deg, #f2c0cf 0%, #e98da6 52%, #c65d7b 100%);
     transition: width 0.6s ease;
   }
   .progress-meta {
@@ -229,15 +230,15 @@
     position: relative;
   }
   .week-btn.active {
-    background: linear-gradient(180deg, #fff 0%, #fdeef2 100%);
-    border-color: rgba(234, 122, 140, 0.4);
+    background: linear-gradient(180deg, #fff 0%, #fde8ef 100%);
+    border-color: rgba(201, 109, 137, 0.4);
     color: var(--text);
     font-weight: 600;
-    box-shadow: 0 10px 22px rgba(234, 122, 140, 0.16);
+    box-shadow: 0 10px 22px rgba(201, 109, 137, 0.16);
   }
-  .week-btn.pico { border-color: rgba(29,185,122,0.4); }
-  .week-btn.taper { border-color: rgba(245,158,11,0.3); }
-  .week-btn.race { border-color: rgba(239,68,68,0.4); }
+  .week-btn.pico { border-color: rgba(215,162,242,0.44); }
+  .week-btn.taper { border-color: rgba(240,183,201,0.42); }
+  .week-btn.race { border-color: rgba(217,107,142,0.42); }
   .week-btn.done::after {
     content: '✓';
     position: absolute;
@@ -245,7 +246,7 @@
     right: -4px;
     width: 14px;
     height: 14px;
-    background: linear-gradient(180deg, #f7c4cf 0%, #2bbf8b 100%);
+    background: linear-gradient(180deg, #f7c4d2 0%, #c65d7b 100%);
     border-radius: 99px;
     font-size: 8px;
     color: #000;
@@ -336,7 +337,7 @@
   .vol-bar-fill {
     height: 100%;
     border-radius: 99px;
-    background: linear-gradient(90deg, #2bbf8b, #74a9ff);
+    background: linear-gradient(90deg, #f7c4d2, #e98da6, #c65d7b);
   }
   .vol-bar-fill.taper { background: var(--amber); }
   .vol-bar-fill.race { background: var(--red); }
@@ -401,10 +402,10 @@
     font-size: 18px;
     flex-shrink: 0;
   }
-  .icon-run { background: rgba(43,191,139,0.12); }
-  .icon-gym { background: rgba(116,169,255,0.12); }
+  .icon-run { background: rgba(233,141,166,0.14); }
+  .icon-gym { background: rgba(215,162,242,0.14); }
   .icon-rest { background: rgba(255,255,255,0.55); }
-  .icon-race { background: rgba(234,122,140,0.16); }
+  .icon-race { background: rgba(217,107,142,0.18); }
   .icon-done-day { background: rgba(255,255,255,0.55); }
 
   .day-info { flex: 1; min-width: 0; }
@@ -445,7 +446,7 @@
     color: transparent;
   }
   .day-check.checked {
-    background: linear-gradient(180deg, #f7c4cf 0%, #2bbf8b 100%);
+    background: linear-gradient(180deg, #f7c4d2 0%, #e98da6 100%);
     border-color: transparent;
     color: #000;
   }
@@ -503,7 +504,7 @@
     font-size: 12px;
     color: var(--text2);
     line-height: 1.6;
-    border-left: 2px solid #ea7a8c;
+    border-left: 2px solid #c65d7b;
   }
 
   /* RITMOS TAB */
@@ -594,7 +595,7 @@
     top: 20px;
     left: 50%;
     transform: translateX(-50%) translateY(-100px);
-    background: linear-gradient(135deg, #2bbf8b 0%, #f7c4cf 100%);
+    background: linear-gradient(135deg, #f7c4d2 0%, #e98da6 100%);
     color: #1f1621;
     padding: 10px 20px;
     border-radius: 99px;
@@ -648,7 +649,7 @@
     gap: 8px;
     padding: 6px 10px;
     border-radius: 99px;
-    background: rgba(247, 196, 207, 0.32);
+    background: rgba(247, 196, 210, 0.38);
     color: var(--green-dark);
     font-size: 11px;
     letter-spacing: 1.5px;
@@ -725,8 +726,14 @@
   }
 
   .login-btn.primary {
-    background: linear-gradient(135deg, #ea7a8c 0%, #2bbf8b 100%);
-    color: #1f1621;
+    background: linear-gradient(135deg, #f9d3dd 0%, #f0b7c9 55%, #e98da6 100%);
+    color: var(--text);
+    box-shadow: 0 12px 24px rgba(201, 109, 137, 0.16);
+  }
+
+  .login-btn.primary:hover {
+    filter: brightness(0.98);
+    transform: translateY(-1px);
   }
 
   .login-btn.secondary {
@@ -806,7 +813,7 @@
 
 <div id="loginGate" class="login-gate">
   <div class="login-card">
-    <div class="login-badge">🏁 Acceso privado</div>
+    <div class="login-badge">◆ Acceso privado</div>
     <div class="login-title">Panamá 21K</div>
     <div class="login-subtitle">Ingresa tu usuario y contraseña para ver el plan de entrenamiento.</div>
     <form id="loginForm" autocomplete="off">
@@ -857,8 +864,8 @@
     <div class="phase-pills">
       <span class="phase-pill pill-base">Base S1–5</span>
       <span class="phase-pill pill-dev">Desarrollo S6–10</span>
-      <span class="phase-pill pill-pico">⚡ Pico S11–15</span>
-      <span class="phase-pill pill-taper">Tapering S16–18</span>
+      <span class="phase-pill pill-pico">✨ Pico S11–15</span>
+      <span class="phase-pill pill-taper">⬇️ Tapering S16–18</span>
       <span class="phase-pill pill-race">🏁 Carrera S19</span>
     </div>
     <div class="overall-bar">
@@ -983,27 +990,27 @@
       <div style="font-family:'Bebas Neue',sans-serif;font-size:28px;margin-bottom:1.25rem;padding:1.25rem 0 0">Tips Clave</div>
       <div style="display:flex;flex-direction:column;gap:10px">
         <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:14px">
-          <div style="font-size:13px;font-weight:600;margin-bottom:6px">🌡️ Adaptación a Panamá</div>
+          <div style="font-size:13px;font-weight:600;margin-bottom:6px">☼ Adaptación a Panamá</div>
           <div style="font-size:12px;color:var(--text2);line-height:1.6">Calurosa y húmeda. Entrena algunos días al mediodía en Cartago para adaptarte. Llega 2–3 días antes y no hagas nada fuerte allá.</div>
         </div>
         <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:14px">
-          <div style="font-size:13px;font-weight:600;margin-bottom:6px">💊 Nutrición en carrera</div>
+          <div style="font-size:13px;font-weight:600;margin-bottom:6px">✚ Nutrición en carrera</div>
           <div style="font-size:12px;color:var(--text2);line-height:1.6">Geles Going en km 7 y km 14. Solo agua en los puestos — el Gatorade te cae mal. Tus geles ya traen sodio, potasio y electrolitos.</div>
         </div>
         <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:14px">
-          <div style="font-size:13px;font-weight:600;margin-bottom:6px">🏋️ Gym en fase pico</div>
+          <div style="font-size:13px;font-weight:600;margin-bottom:6px">◼ Gym en fase pico</div>
           <div style="font-size:12px;color:var(--text2);line-height:1.6">Semanas 11–15: gym de pierna al 60% de volumen. En tapering (16–18): solo activación con pesos livianos y muchas reps.</div>
         </div>
         <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:14px">
-          <div style="font-size:13px;font-weight:600;margin-bottom:6px">😴 Tapering</div>
+          <div style="font-size:13px;font-weight:600;margin-bottom:6px">◯ Tapering</div>
           <div style="font-size:12px;color:var(--text2);line-height:1.6">Sem 16–18 reduce KM a 70%, 50%, 30% del pico. Mantén 1–2 estímulos cortos de calidad. El descanso ES entrenamiento.</div>
         </div>
         <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:14px">
-          <div style="font-size:13px;font-weight:600;margin-bottom:6px">🏁 Estrategia de carrera</div>
+          <div style="font-size:13px;font-weight:600;margin-bottom:6px">◆ Estrategia de carrera</div>
           <div style="font-size:12px;color:var(--text2);line-height:1.6">Primeros 5km a 5:18–5:20/km (sal conservadora). Km 6–18 a 5:12/km. Últimos 3km lo que tengas. El calor de Panamá puede engañarte al inicio.</div>
         </div>
         <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:14px">
-          <div style="font-size:13px;font-weight:600;margin-bottom:6px">❤️ Zona 2 es la base</div>
+          <div style="font-size:13px;font-weight:600;margin-bottom:6px">♥ Zona 2 es la base</div>
           <div style="font-size:12px;color:var(--text2);line-height:1.6">70–75% del kilometraje en zona 2. No te aceleres los días fáciles — eso permite recuperarte para los estímulos duros del martes.</div>
         </div>
       </div>
@@ -1018,7 +1025,7 @@
     <span class="nav-icon">📅</span>Plan
   </button>
   <button class="nav-btn" onclick="switchTab('ritmos', this)">
-    <span class="nav-icon">⚡</span>Ritmos
+    <span class="nav-icon">⏱️</span>Ritmos
   </button>
   <button class="nav-btn" onclick="switchTab('info', this)">
     <span class="nav-icon">💡</span>Tips
@@ -1030,17 +1037,30 @@ const AUTH_KEY = 'panamaplan-auth';
 const AUTH_USER = 'valentina';
 const AUTH_PASS = 'panama21k';
 
+function normalizeEmoji(value) {
+  return String(value || '')
+    .replace(/🏃/g, '🏃🏾')
+    .replace(/🏋️/g, '🏋🏾')
+    .replace(/💪/g, '💪🏾');
+}
+
+function paintEmojis() {
+  if (window.twemoji) {
+    twemoji.parse(document.body, {folder: 'svg', ext: '.svg'});
+  }
+}
+
 const DAYS = ['Lun','Mar','Mié','Jue','Vie','Sáb','Dom'];
 
 const weeks = [
   { num:1, tipo:'base', label:'Adaptación', dates:'11–17 May', km:35, days:[
-    {name:'Lun',title:'Pecho + Trícep',sub:'Gym',type:'gym',icon:'🏋️',detail:{cal:'—',ritmo:'—',rec:'—',afloje:'—',notas:'Volumen normal. Enfócate en técnica.'}},
-    {name:'Mar',title:'6×400m ✓',sub:'Intervalos — COMPLETADO',type:'done',icon:'✅',detail:{cal:'10 min trote + 4 strides',ritmo:'4:45–4:50/km por rep',rec:'Trote suave 90s entre reps',afloje:'10 min trote suave',notas:'Ya completado. ¡Buen trabajo!'}},
-    {name:'Mié',title:'Espalda + Bícep',sub:'Gym',type:'gym',icon:'🏋️',detail:{cal:'—',ritmo:'—',rec:'—',afloje:'—',notas:'Volumen normal.'}},
-    {name:'Jue',title:'Zona 2',sub:'45 min · 6:00–6:15/km',type:'run',icon:'🏃',detail:{cal:'Primeros 5 min muy suaves',ritmo:'6:00–6:15/km',rec:'No aplica (continuo)',afloje:'Últimos 5 min bajando',notas:'Debes poder hablar con frases completas todo el tiempo.'}},
-    {name:'Vie',title:'Pierna',sub:'Gym',type:'gym',icon:'🏋️',detail:{cal:'—',ritmo:'—',rec:'—',afloje:'—',notas:'Sentadilla, prensa, peso muerto rumano.'}},
-    {name:'Sáb',title:'Descanso',sub:'Recuperación activa',type:'rest',icon:'😴',detail:{cal:'—',ritmo:'—',rec:'—',afloje:'—',notas:'Caminata, movilidad, stretching.'}},
-    {name:'Dom',title:'Fondo largo',sub:'16km · 5:55–6:10/km',type:'run',icon:'🏃',detail:{cal:'Primeros 2km muy suaves',ritmo:'5:55–6:10/km todo el recorrido',rec:'No aplica',afloje:'Últimos 2km bajando el ritmo',notas:'Si sientes las piernas pesadas por el gym del viernes, es normal en semana 1.'}},
+    {name:'Lun',title:'Pecho + Trícep',sub:'Gym',type:'gym',icon:'◼',detail:{cal:'—',ritmo:'—',rec:'—',afloje:'—',notas:'Volumen normal. Enfócate en técnica.'}},
+    {name:'Mar',title:'6×400m ✓',sub:'Intervalos — COMPLETADO',type:'done',icon:'✓',detail:{cal:'10 min trote + 4 strides',ritmo:'4:45–4:50/km por rep',rec:'Trote suave 90s entre reps',afloje:'10 min trote suave',notas:'Ya completado. ¡Buen trabajo!'}},
+    {name:'Mié',title:'Espalda + Bícep',sub:'Gym',type:'gym',icon:'◼',detail:{cal:'—',ritmo:'—',rec:'—',afloje:'—',notas:'Volumen normal.'}},
+    {name:'Jue',title:'Zona 2',sub:'45 min · 6:00–6:15/km',type:'run',icon:'↗',detail:{cal:'Primeros 5 min muy suaves',ritmo:'6:00–6:15/km',rec:'No aplica (continuo)',afloje:'Últimos 5 min bajando',notas:'Debes poder hablar con frases completas todo el tiempo.'}},
+    {name:'Vie',title:'Pierna',sub:'Gym',type:'gym',icon:'◼',detail:{cal:'—',ritmo:'—',rec:'—',afloje:'—',notas:'Sentadilla, prensa, peso muerto rumano.'}},
+    {name:'Sáb',title:'Descanso',sub:'Recuperación activa',type:'rest',icon:'◯',detail:{cal:'—',ritmo:'—',rec:'—',afloje:'—',notas:'Caminata, movilidad, stretching.'}},
+    {name:'Dom',title:'Fondo largo',sub:'16km · 5:55–6:10/km',type:'run',icon:'↗',detail:{cal:'Primeros 2km muy suaves',ritmo:'5:55–6:10/km todo el recorrido',rec:'No aplica',afloje:'Últimos 2km bajando el ritmo',notas:'Si sientes las piernas pesadas por el gym del viernes, es normal en semana 1.'}},
   ]},
   { num:2, tipo:'base', label:'Base', dates:'18–24 May', km:38, days:[
     {name:'Lun',title:'Pecho + Trícep',sub:'Gym',type:'gym',icon:'🏋️',detail:{cal:'—',ritmo:'—',rec:'—',afloje:'—',notas:'Volumen normal.'}},
@@ -1269,7 +1289,7 @@ function renderWeek() {
   const barPct = Math.round((w.km / maxKm) * 100);
   const barClass = w.tipo === 'taper' ? 'taper' : w.tipo === 'race' ? 'race' : '';
   const phaseColor = w.tipo === 'pico' ? 'var(--green)' : w.tipo === 'taper' ? 'var(--amber)' : w.tipo === 'race' ? 'var(--red)' : w.tipo === 'desarrollo' ? 'var(--blue)' : 'var(--text3)';
-  const phaseLabel = w.tipo === 'pico' ? '⚡ FASE PICO' : w.tipo === 'taper' ? '↓ TAPERING' : w.tipo === 'race' ? '🏁 SEMANA CARRERA' : w.tipo === 'desarrollo' ? 'DESARROLLO' : 'BASE AERÓBICA';
+  const phaseLabel = w.tipo === 'pico' ? '✨ FASE PICO' : w.tipo === 'taper' ? '⬇️ TAPERING' : w.tipo === 'race' ? '🏁 SEMANA CARRERA' : w.tipo === 'desarrollo' ? 'DESARROLLO' : 'BASE AERÓBICA';
   const weekDone = isWeekDone(w.num);
 
   const daysHtml = w.days.map((d, i) => {
@@ -1277,12 +1297,13 @@ function renderWeek() {
     const checked = state.checked[key];
     const typeClass = d.type === 'run' ? 'run' : d.type === 'gym' ? 'gym' : d.type === 'race' ? 'race-day' : 'rest';
     const iconClass = d.type === 'run' ? 'icon-run' : d.type === 'gym' ? 'icon-gym' : d.type === 'race' ? 'icon-race' : d.type === 'done' ? 'icon-done-day' : 'icon-rest';
+    const iconGlyph = normalizeEmoji(d.icon || (d.type === 'done' ? '✅' : ''));
     const isOpen = openDay === i;
 
     return `
       <div class="day-card ${typeClass} ${checked ? 'done-card' : ''}" id="daycard-${i}">
         <div class="day-header" onclick="toggleDay(${i})">
-          <div class="day-icon ${iconClass}">${d.icon}</div>
+          <div class="day-icon ${iconClass}">${iconGlyph}</div>
           <div class="day-info">
             <div class="day-name">${d.name}</div>
             <div class="day-title">${d.title}</div>
@@ -1294,28 +1315,28 @@ function renderWeek() {
         <div class="day-detail ${isOpen ? 'visible' : ''}" id="daydetail-${i}">
           <div class="detail-grid">
             <div class="detail-row">
-              <span class="detail-icon-sm">🔥</span>
+              <span class="detail-icon-sm">▵</span>
               <div class="detail-content">
                 <div class="detail-label-sm">Calentamiento</div>
                 <div class="detail-val-sm">${d.detail.cal}</div>
               </div>
             </div>
             <div class="detail-row">
-              <span class="detail-icon-sm">⚡</span>
+              <span class="detail-icon-sm">✦</span>
               <div class="detail-content">
                 <div class="detail-label-sm">Ritmo</div>
                 <div class="detail-val-sm">${d.detail.ritmo}</div>
               </div>
             </div>
             <div class="detail-row">
-              <span class="detail-icon-sm">⏸️</span>
+              <span class="detail-icon-sm">Ⅱ</span>
               <div class="detail-content">
                 <div class="detail-label-sm">Recovery</div>
                 <div class="detail-val-sm">${d.detail.rec}</div>
               </div>
             </div>
             <div class="detail-row">
-              <span class="detail-icon-sm">🧊</span>
+              <span class="detail-icon-sm">◌</span>
               <div class="detail-content">
                 <div class="detail-label-sm">Afloje</div>
                 <div class="detail-val-sm">${d.detail.afloje}</div>
@@ -1347,6 +1368,7 @@ function renderWeek() {
     </button>
     <div class="days-list">${daysHtml}</div>
   `;
+  paintEmojis();
 }
 
 function toggleDay(idx) {
@@ -1382,6 +1404,7 @@ function showToast(msg) {
   const t = document.getElementById('toast');
   t.textContent = msg;
   t.classList.add('show');
+  paintEmojis();
   setTimeout(() => t.classList.remove('show'), 2500);
 }
 
@@ -1405,6 +1428,7 @@ function showApp() {
   buildWeekNav();
   renderWeek();
   updateStats();
+  paintEmojis();
   setTimeout(() => {
     const btns = document.querySelectorAll('.week-btn');
     const idx = weeks.findIndex(w => w.num === currentWeek);
