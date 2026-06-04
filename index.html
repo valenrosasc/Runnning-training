@@ -605,6 +605,143 @@
   }
   .toast.show { transform: translateX(-50%) translateY(0); }
 
+  body.auth-locked {
+    overflow: hidden;
+  }
+
+  body.auth-locked .main-content,
+  body.auth-locked .bottom-nav {
+    display: none;
+  }
+
+  .login-gate {
+    position: fixed;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background:
+      radial-gradient(circle at top left, rgba(247, 196, 207, 0.9), transparent 35%),
+      radial-gradient(circle at bottom right, rgba(116, 169, 255, 0.28), transparent 32%),
+      linear-gradient(180deg, #fff9fa 0%, #f7f0f2 48%, #f3ecef 100%);
+    z-index: 200;
+  }
+
+  body.auth-locked .login-gate {
+    display: flex;
+  }
+
+  .login-card {
+    width: min(420px, 100%);
+    background: rgba(255,255,255,0.82);
+    border: 1px solid rgba(133, 92, 104, 0.16);
+    border-radius: 28px;
+    box-shadow: 0 30px 80px rgba(67, 43, 55, 0.14);
+    padding: 24px;
+    backdrop-filter: blur(18px);
+  }
+
+  .login-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 10px;
+    border-radius: 99px;
+    background: rgba(247, 196, 207, 0.32);
+    color: var(--green-dark);
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+
+  .login-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 46px;
+    line-height: 0.95;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+
+  .login-subtitle {
+    font-size: 13px;
+    color: var(--text2);
+    line-height: 1.6;
+    margin-bottom: 18px;
+  }
+
+  .login-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 12px;
+  }
+
+  .login-field label {
+    font-size: 11px;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    color: var(--text3);
+  }
+
+  .login-field input {
+    width: 100%;
+    border: 1px solid rgba(133, 92, 104, 0.18);
+    border-radius: 16px;
+    padding: 14px 14px;
+    font: inherit;
+    color: var(--text);
+    background: rgba(255,255,255,0.9);
+    outline: none;
+  }
+
+  .login-field input:focus {
+    border-color: rgba(234, 122, 140, 0.5);
+    box-shadow: 0 0 0 4px rgba(247, 196, 207, 0.28);
+  }
+
+  .login-error {
+    min-height: 18px;
+    margin-top: 4px;
+    margin-bottom: 10px;
+    color: #c74f69;
+    font-size: 12px;
+  }
+
+  .login-actions {
+    display: flex;
+    gap: 10px;
+  }
+
+  .login-btn {
+    flex: 1;
+    border: none;
+    border-radius: 16px;
+    padding: 14px 16px;
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .login-btn.primary {
+    background: linear-gradient(135deg, #ea7a8c 0%, #2bbf8b 100%);
+    color: #1f1621;
+  }
+
+  .login-btn.secondary {
+    background: rgba(255,255,255,0.85);
+    color: var(--text2);
+    border: 1px solid rgba(133, 92, 104, 0.16);
+  }
+
+  .login-note {
+    margin-top: 14px;
+    font-size: 11px;
+    line-height: 1.6;
+    color: var(--text3);
+  }
+
   .empty-state {
     text-align: center;
     padding: 3rem 1rem;
@@ -667,7 +804,31 @@
 
 <div id="toast" class="toast"></div>
 
-<div class="main-content">
+<div id="loginGate" class="login-gate">
+  <div class="login-card">
+    <div class="login-badge">🏁 Acceso privado</div>
+    <div class="login-title">Panamá 21K</div>
+    <div class="login-subtitle">Ingresa tu usuario y contraseña para ver el plan de entrenamiento.</div>
+    <form id="loginForm" autocomplete="off">
+      <div class="login-field">
+        <label for="loginUser">Usuario</label>
+        <input id="loginUser" name="loginUser" type="text" placeholder="Tu usuario" required>
+      </div>
+      <div class="login-field">
+        <label for="loginPass">Contraseña</label>
+        <input id="loginPass" name="loginPass" type="password" placeholder="Tu contraseña" required>
+      </div>
+      <div id="loginError" class="login-error"></div>
+      <div class="login-actions">
+        <button class="login-btn primary" type="submit">Entrar</button>
+        <button class="login-btn secondary" type="button" id="loginResetBtn">Limpiar</button>
+      </div>
+    </form>
+    <div class="login-note">El progreso se guarda en este navegador. Si lo abres en otro dispositivo, tendrás que iniciar sesión de nuevo.</div>
+  </div>
+</div>
+
+<div id="appRoot" class="main-content">
 
   <!-- HEADER -->
   <div class="header">
@@ -865,6 +1026,10 @@
 </div>
 
 <script>
+const AUTH_KEY = 'panamaplan-auth';
+const AUTH_USER = 'valentina';
+const AUTH_PASS = 'panama21k';
+
 const DAYS = ['Lun','Mar','Mié','Jue','Vie','Sáb','Dom'];
 
 const weeks = [
@@ -1232,16 +1397,61 @@ function switchTab(tab, btn) {
   }
 }
 
+function showApp() {
+  document.body.classList.remove('auth-locked');
+  document.getElementById('loginGate').style.display = 'none';
+  document.getElementById('appRoot').style.display = 'block';
+  document.querySelector('.bottom-nav').style.display = 'flex';
+  buildWeekNav();
+  renderWeek();
+  updateStats();
+  setTimeout(() => {
+    const btns = document.querySelectorAll('.week-btn');
+    const idx = weeks.findIndex(w => w.num === currentWeek);
+    if (btns[idx]) btns[idx].scrollIntoView({behavior:'instant', block:'nearest', inline:'center'});
+  }, 100);
+}
+
+function lockApp() {
+  document.body.classList.add('auth-locked');
+  document.getElementById('loginGate').style.display = 'flex';
+  document.getElementById('appRoot').style.display = 'none';
+  document.querySelector('.bottom-nav').style.display = 'none';
+}
+
+function handleLogin(event) {
+  event.preventDefault();
+  const user = document.getElementById('loginUser').value.trim();
+  const pass = document.getElementById('loginPass').value;
+  const error = document.getElementById('loginError');
+
+  if (user === AUTH_USER && pass === AUTH_PASS) {
+    sessionStorage.setItem(AUTH_KEY, '1');
+    error.textContent = '';
+    showApp();
+    return;
+  }
+
+  error.textContent = 'Usuario o contraseña incorrectos.';
+}
+
+function resetLoginForm() {
+  document.getElementById('loginUser').value = '';
+  document.getElementById('loginPass').value = '';
+  document.getElementById('loginError').textContent = '';
+  document.getElementById('loginUser').focus();
+}
+
 // INIT
-buildWeekNav();
-renderWeek();
-updateStats();
-// scroll to current week
-setTimeout(() => {
-  const btns = document.querySelectorAll('.week-btn');
-  const idx = weeks.findIndex(w => w.num === currentWeek);
-  if (btns[idx]) btns[idx].scrollIntoView({behavior:'instant', block:'nearest', inline:'center'});
-}, 100);
+document.getElementById('loginForm').addEventListener('submit', handleLogin);
+document.getElementById('loginResetBtn').addEventListener('click', resetLoginForm);
+
+if (sessionStorage.getItem(AUTH_KEY) === '1') {
+  showApp();
+} else {
+  lockApp();
+  document.getElementById('loginUser').focus();
+}
 </script>
 </body>
 </html>
