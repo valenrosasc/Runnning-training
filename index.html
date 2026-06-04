@@ -830,7 +830,7 @@
         <button class="login-btn secondary" type="button" id="loginResetBtn">Limpiar</button>
       </div>
     </form>
-    <div class="login-note">El progreso se guarda en este navegador. Si lo abres en otro dispositivo, tendrás que iniciar sesión de nuevo.</div>
+    <div class="login-note">El progreso se sincroniza en la nube para que lo veas también en tu celular y otros dispositivos.</div>
   </div>
 </div>
 
@@ -1033,8 +1033,35 @@
 
 <script>
 const AUTH_KEY = 'panamaplan-auth';
-const AUTH_USER = 'valentina';
-const AUTH_PASS = 'panama21k';
+const AUTH_USER = 'Valentina Rosas Coral';
+const AUTH_PASS = 'amoaluna';
+
+function getRemoteUserKey() {
+  return AUTH_USER.toLowerCase().replace(/\s+/g, '-');
+}
+
+async function loadRemoteState() {
+  try {
+    const r = await fetch(`/api/gist-load?user=${encodeURIComponent(getRemoteUserKey())}`);
+    if (!r.ok) return null;
+    const j = await r.json();
+    return j && j.state ? j.state : null;
+  } catch (e) {
+    return null;
+  }
+}
+
+async function saveRemoteState() {
+  try {
+    await fetch('/api/gist-save', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ user: getRemoteUserKey(), state })
+    });
+  } catch (e) {
+    // silent
+  }
+}
 
 const DAYS = ['Lun','Mar','Mié','Jue','Vie','Sáb','Dom'];
 
@@ -1219,6 +1246,9 @@ let openDay = null;
 
 function saveState() {
   localStorage.setItem('panamaplan', JSON.stringify(state));
+  if (sessionStorage.getItem(AUTH_KEY) === '1') {
+    saveRemoteState();
+  }
 }
 
 function getTotalDays() {
@@ -1426,20 +1456,29 @@ function lockApp() {
   document.querySelector('.bottom-nav').style.display = 'none';
 }
 
-function handleLogin(event) {
+async function handleLogin(event) {
   event.preventDefault();
   const user = document.getElementById('loginUser').value.trim();
   const pass = document.getElementById('loginPass').value;
   const error = document.getElementById('loginError');
+  if (!user || !pass) { error.textContent = 'Ingresa usuario y contraseña.'; return; }
 
   if (user === AUTH_USER && pass === AUTH_PASS) {
     sessionStorage.setItem(AUTH_KEY, '1');
     error.textContent = '';
+    const remoteState = await loadRemoteState();
+    if (remoteState) {
+      state = remoteState;
+      localStorage.setItem('panamaplan', JSON.stringify(state));
+    }
     showApp();
+    updateStats();
     return;
   }
 
-  error.textContent = 'Usuario o contraseña incorrectos.';
+  {
+    error.textContent = 'Usuario o contraseña incorrectos.';
+  }
 }
 
 function resetLoginForm() {
@@ -1453,12 +1492,19 @@ function resetLoginForm() {
 document.getElementById('loginForm').addEventListener('submit', handleLogin);
 document.getElementById('loginResetBtn').addEventListener('click', resetLoginForm);
 
-if (sessionStorage.getItem(AUTH_KEY) === '1') {
-  showApp();
-} else {
-  lockApp();
-  document.getElementById('loginUser').focus();
-}
+(async () => {
+  if (sessionStorage.getItem(AUTH_KEY) === '1') {
+    const remoteState = await loadRemoteState();
+    if (remoteState) {
+      state = remoteState;
+      localStorage.setItem('panamaplan', JSON.stringify(state));
+    }
+    showApp();
+  } else {
+    lockApp();
+    document.getElementById('loginUser').focus();
+  }
+})();
 </script>
 </body>
 </html>
