@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Panamá 21K — Plan de Entrenamiento</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/twemoji@14.0.2/dist/twemoji.min.js" crossorigin="anonymous"></script>
 <style>
   :root {
     --green: #e98da6;
@@ -839,7 +838,7 @@
 
   <!-- HEADER -->
   <div class="header">
-    <div class="header-label">🏁 Maratón de Panamá · 21K</div>
+    <div class="header-label">◆ Maratón de Panamá · 21K</div>
     <div class="header-title">Plan 21K</div>
     <div class="header-sub">20 Sep 2025 · Objetivo: 1:50:00</div>
     <div class="header-stats">
@@ -864,9 +863,9 @@
     <div class="phase-pills">
       <span class="phase-pill pill-base">Base S1–5</span>
       <span class="phase-pill pill-dev">Desarrollo S6–10</span>
-      <span class="phase-pill pill-pico">✨ Pico S11–15</span>
-      <span class="phase-pill pill-taper">⬇️ Tapering S16–18</span>
-      <span class="phase-pill pill-race">🏁 Carrera S19</span>
+      <span class="phase-pill pill-pico">✦ Pico S11–15</span>
+      <span class="phase-pill pill-taper">↓ Tapering S16–18</span>
+      <span class="phase-pill pill-race">◆ Carrera S19</span>
     </div>
     <div class="overall-bar">
       <div class="overall-fill" id="overallBar" style="width:0%"></div>
@@ -1025,10 +1024,10 @@
     <span class="nav-icon">📅</span>Plan
   </button>
   <button class="nav-btn" onclick="switchTab('ritmos', this)">
-    <span class="nav-icon">⏱️</span>Ritmos
+    <span class="nav-icon">✦</span>Ritmos
   </button>
   <button class="nav-btn" onclick="switchTab('info', this)">
-    <span class="nav-icon">💡</span>Tips
+    <span class="nav-icon">◌</span>Tips
   </button>
 </div>
 
@@ -1036,19 +1035,6 @@
 const AUTH_KEY = 'panamaplan-auth';
 const AUTH_USER = 'valentina';
 const AUTH_PASS = 'panama21k';
-
-function normalizeEmoji(value) {
-  return String(value || '')
-    .replace(/🏃/g, '🏃🏾')
-    .replace(/🏋️/g, '🏋🏾')
-    .replace(/💪/g, '💪🏾');
-}
-
-function paintEmojis() {
-  if (window.twemoji) {
-    twemoji.parse(document.body, {folder: 'svg', ext: '.svg'});
-  }
-}
 
 const DAYS = ['Lun','Mar','Mié','Jue','Vie','Sáb','Dom'];
 
@@ -1289,7 +1275,7 @@ function renderWeek() {
   const barPct = Math.round((w.km / maxKm) * 100);
   const barClass = w.tipo === 'taper' ? 'taper' : w.tipo === 'race' ? 'race' : '';
   const phaseColor = w.tipo === 'pico' ? 'var(--green)' : w.tipo === 'taper' ? 'var(--amber)' : w.tipo === 'race' ? 'var(--red)' : w.tipo === 'desarrollo' ? 'var(--blue)' : 'var(--text3)';
-  const phaseLabel = w.tipo === 'pico' ? '✨ FASE PICO' : w.tipo === 'taper' ? '⬇️ TAPERING' : w.tipo === 'race' ? '🏁 SEMANA CARRERA' : w.tipo === 'desarrollo' ? 'DESARROLLO' : 'BASE AERÓBICA';
+  const phaseLabel = w.tipo === 'pico' ? '✦ FASE PICO' : w.tipo === 'taper' ? '↓ TAPERING' : w.tipo === 'race' ? '◆ SEMANA CARRERA' : w.tipo === 'desarrollo' ? 'DESARROLLO' : 'BASE AERÓBICA';
   const weekDone = isWeekDone(w.num);
 
   const daysHtml = w.days.map((d, i) => {
@@ -1297,7 +1283,7 @@ function renderWeek() {
     const checked = state.checked[key];
     const typeClass = d.type === 'run' ? 'run' : d.type === 'gym' ? 'gym' : d.type === 'race' ? 'race-day' : 'rest';
     const iconClass = d.type === 'run' ? 'icon-run' : d.type === 'gym' ? 'icon-gym' : d.type === 'race' ? 'icon-race' : d.type === 'done' ? 'icon-done-day' : 'icon-rest';
-    const iconGlyph = normalizeEmoji(d.icon || (d.type === 'done' ? '✅' : ''));
+    const iconGlyph = d.type === 'run' ? '↗' : d.type === 'gym' ? '◼' : d.type === 'race' ? '◆' : d.type === 'done' ? '✓' : '◯';
     const isOpen = openDay === i;
 
     return `
@@ -1368,7 +1354,6 @@ function renderWeek() {
     </button>
     <div class="days-list">${daysHtml}</div>
   `;
-  paintEmojis();
 }
 
 function toggleDay(idx) {
@@ -1404,7 +1389,6 @@ function showToast(msg) {
   const t = document.getElementById('toast');
   t.textContent = msg;
   t.classList.add('show');
-  paintEmojis();
   setTimeout(() => t.classList.remove('show'), 2500);
 }
 
@@ -1428,7 +1412,6 @@ function showApp() {
   buildWeekNav();
   renderWeek();
   updateStats();
-  paintEmojis();
   setTimeout(() => {
     const btns = document.querySelectorAll('.week-btn');
     const idx = weeks.findIndex(w => w.num === currentWeek);
