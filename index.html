@@ -1,0 +1,1247 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panamá 21K — Plan de Entrenamiento</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green: #2bbf8b;
+    --green-dark: #15825e;
+    --green-dim: #16382c;
+    --blue: #74a9ff;
+    --blue-dim: #17243d;
+    --amber: #f2bb6b;
+    --red: #ea7a8c;
+    --rose: #f7c4cf;
+    --pearl: #fff7f8;
+    --bg: #f6efef;
+    --surface: rgba(255, 255, 255, 0.78);
+    --surface2: rgba(255, 255, 255, 0.58);
+    --border: rgba(133, 92, 104, 0.16);
+    --text: #2d2430;
+    --text2: #6f6570;
+    --text3: #9a8d95;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background:
+      radial-gradient(circle at top left, rgba(247, 196, 207, 0.72), transparent 34%),
+      radial-gradient(circle at top right, rgba(116, 169, 255, 0.22), transparent 28%),
+      linear-gradient(180deg, #fff9fa 0%, #f7f0f2 42%, #f3ecef 100%);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body::before,
+  body::after {
+    content: '';
+    position: fixed;
+    inset: auto;
+    width: 280px;
+    height: 280px;
+    border-radius: 50%;
+    filter: blur(20px);
+    opacity: 0.35;
+    pointer-events: none;
+    z-index: -1;
+  }
+  body::before {
+    background: radial-gradient(circle, rgba(247, 196, 207, 0.95), rgba(247, 196, 207, 0));
+    top: -110px;
+    right: -90px;
+  }
+  body::after {
+    background: radial-gradient(circle, rgba(116, 169, 255, 0.55), rgba(116, 169, 255, 0));
+    bottom: 16%;
+    left: -100px;
+  }
+
+  /* HEADER */
+  .header {
+    background:
+      linear-gradient(135deg, rgba(255,255,255,0.92) 0%, rgba(255, 248, 249, 0.9) 55%, rgba(247,196,207,0.55) 100%);
+    padding: 2rem 1.25rem 1.5rem;
+    border-bottom: 1px solid rgba(133, 92, 104, 0.14);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(67, 43, 55, 0.08);
+    border-radius: 0 0 28px 28px;
+  }
+  .header::before {
+    content: '21K';
+    position: absolute;
+    right: -8px;
+    top: -6px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 120px;
+    color: rgba(45, 36, 48, 0.06);
+    line-height: 1;
+    pointer-events: none;
+  }
+  .header-label {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--green-dark);
+    margin-bottom: 6px;
+    font-weight: 500;
+  }
+  .header-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 38px;
+    line-height: 1;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .header-sub {
+    font-size: 13px;
+    color: var(--text2);
+    margin-bottom: 1.25rem;
+  }
+  .header-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+  .stat {
+    background: rgba(255,255,255,0.68);
+    border: 1px solid rgba(133, 92, 104, 0.12);
+    border-radius: 16px;
+    padding: 10px;
+    text-align: center;
+    box-shadow: 0 10px 24px rgba(67, 43, 55, 0.05);
+  }
+  .stat-val {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    color: var(--green-dark);
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 10px;
+    color: var(--text3);
+    margin-top: 2px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  /* PROGRESS */
+  .progress-section {
+    padding: 1.25rem;
+    border-bottom: 1px solid rgba(133, 92, 104, 0.12);
+  }
+  .progress-label {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text3);
+    margin-bottom: 10px;
+  }
+  .phase-pills {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+  }
+  .phase-pill {
+    font-size: 10px;
+    padding: 4px 8px;
+    border-radius: 99px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+  }
+  .pill-base { background: rgba(29,185,122,0.15); color: var(--green); }
+  .pill-dev { background: rgba(116,169,255,0.15); color: var(--blue); }
+  .pill-pico { background: rgba(247, 196, 207, 0.38); color: #d35d79; border: 1px solid rgba(247, 196, 207, 0.7); }
+  .pill-taper { background: rgba(242,187,107,0.18); color: #b57217; }
+  .pill-race { background: rgba(234,122,140,0.18); color: #b6455c; }
+
+  .overall-bar {
+    background: rgba(255,255,255,0.72);
+    border-radius: 99px;
+    height: 6px;
+    overflow: hidden;
+  }
+  .overall-fill {
+    height: 100%;
+    border-radius: 99px;
+    background: linear-gradient(90deg, #8a5cf6 0%, #ea7a8c 52%, #2bbf8b 100%);
+    transition: width 0.6s ease;
+  }
+  .progress-meta {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 6px;
+    font-size: 11px;
+    color: var(--text3);
+  }
+
+  /* NAV */
+  .week-nav {
+    padding: 1rem 1.25rem 0;
+    border-bottom: 1px solid rgba(133, 92, 104, 0.12);
+    position: sticky;
+    top: 0;
+    background: rgba(246, 239, 239, 0.86);
+    backdrop-filter: blur(16px);
+    z-index: 10;
+  }
+  .week-nav-label {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text3);
+    margin-bottom: 8px;
+  }
+  .week-scroll {
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    padding-bottom: 1rem;
+    scrollbar-width: none;
+  }
+  .week-scroll::-webkit-scrollbar { display: none; }
+  .week-btn {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    border: 1px solid rgba(133, 92, 104, 0.14);
+    background: rgba(255,255,255,0.7);
+    color: var(--text3);
+    font-size: 12px;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    transition: all 0.15s;
+    position: relative;
+  }
+  .week-btn.active {
+    background: linear-gradient(180deg, #fff 0%, #fdeef2 100%);
+    border-color: rgba(234, 122, 140, 0.4);
+    color: var(--text);
+    font-weight: 600;
+    box-shadow: 0 10px 22px rgba(234, 122, 140, 0.16);
+  }
+  .week-btn.pico { border-color: rgba(29,185,122,0.4); }
+  .week-btn.taper { border-color: rgba(245,158,11,0.3); }
+  .week-btn.race { border-color: rgba(239,68,68,0.4); }
+  .week-btn.done::after {
+    content: '✓';
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    width: 14px;
+    height: 14px;
+    background: linear-gradient(180deg, #f7c4cf 0%, #2bbf8b 100%);
+    border-radius: 99px;
+    font-size: 8px;
+    color: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    line-height: 14px;
+    text-align: center;
+  }
+  .week-btn .wk-num { font-size: 13px; font-weight: 600; line-height: 1; }
+  .week-btn .wk-dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 99px;
+    background: currentColor;
+    opacity: 0.4;
+  }
+  .week-btn.pico .wk-dot { background: var(--green); opacity: 0.8; }
+  .week-btn.taper .wk-dot { background: var(--amber); opacity: 0.8; }
+  .week-btn.race .wk-dot { background: var(--red); opacity: 0.8; }
+
+  /* WEEK CONTENT */
+  .week-content {
+    padding: 1.25rem;
+  }
+  .week-header-bar {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+  .week-meta { flex: 1; }
+  .week-phase-tag {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .week-title-big {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    line-height: 1;
+    color: var(--text);
+  }
+  .week-dates {
+    font-size: 12px;
+    color: var(--text3);
+    margin-top: 2px;
+  }
+  .week-km-badge {
+    background: rgba(255,255,255,0.76);
+    border: 1px solid rgba(133, 92, 104, 0.14);
+    border-radius: 18px;
+    padding: 8px 12px;
+    text-align: center;
+    flex-shrink: 0;
+    margin-left: 12px;
+    box-shadow: 0 12px 28px rgba(67, 43, 55, 0.06);
+  }
+  .week-km-val {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 24px;
+    color: var(--green-dark);
+    line-height: 1;
+  }
+  .week-km-label {
+    font-size: 9px;
+    color: var(--text3);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  /* VOLUME BAR */
+  .vol-bar-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 1.25rem;
+  }
+  .vol-bar-wrap {
+    flex: 1;
+    background: rgba(255,255,255,0.72);
+    border-radius: 99px;
+    height: 4px;
+    overflow: hidden;
+  }
+  .vol-bar-fill {
+    height: 100%;
+    border-radius: 99px;
+    background: linear-gradient(90deg, #2bbf8b, #74a9ff);
+  }
+  .vol-bar-fill.taper { background: var(--amber); }
+  .vol-bar-fill.race { background: var(--red); }
+
+  /* COMPLETE WEEK BTN */
+  .complete-week-btn {
+    width: 100%;
+    padding: 12px;
+    border-radius: 16px;
+    border: 1px dashed rgba(133, 92, 104, 0.24);
+    background: rgba(255,255,255,0.6);
+    color: var(--text2);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    cursor: pointer;
+    margin-bottom: 1.25rem;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  .complete-week-btn.completed {
+    border-color: rgba(43, 191, 139, 0.44);
+    color: var(--green-dark);
+    background: rgba(43, 191, 139, 0.08);
+  }
+  .complete-week-btn:active { transform: scale(0.98); }
+
+  /* DAYS */
+  .days-list { display: flex; flex-direction: column; gap: 8px; }
+  .day-card {
+    background: var(--surface);
+    border: 1px solid rgba(133, 92, 104, 0.16);
+    border-radius: 18px;
+    overflow: hidden;
+    transition: all 0.2s;
+    box-shadow: 0 16px 36px rgba(67, 43, 55, 0.06);
+    backdrop-filter: blur(12px);
+  }
+  .day-card.run { border-left: 3px solid var(--green); }
+  .day-card.gym { border-left: 3px solid var(--blue); }
+  .day-card.rest { border-left: 3px solid rgba(133, 92, 104, 0.24); opacity: 0.78; }
+  .day-card.race-day { border-left: 3px solid var(--red); }
+  .day-card.done-card { opacity: 0.5; }
+
+  .day-header {
+    display: flex;
+    align-items: center;
+    padding: 12px 14px;
+    gap: 12px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .day-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .icon-run { background: rgba(43,191,139,0.12); }
+  .icon-gym { background: rgba(116,169,255,0.12); }
+  .icon-rest { background: rgba(255,255,255,0.55); }
+  .icon-race { background: rgba(234,122,140,0.16); }
+  .icon-done-day { background: rgba(255,255,255,0.55); }
+
+  .day-info { flex: 1; min-width: 0; }
+  .day-name {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text3);
+    margin-bottom: 2px;
+  }
+  .day-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .day-subtitle {
+    font-size: 12px;
+    color: var(--text2);
+    margin-top: 1px;
+  }
+
+  .day-check {
+    width: 28px;
+    height: 28px;
+    border-radius: 99px;
+    border: 1.5px solid rgba(133, 92, 104, 0.24);
+    background: rgba(255,255,255,0.7);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    flex-shrink: 0;
+    transition: all 0.2s;
+    color: transparent;
+  }
+  .day-check.checked {
+    background: linear-gradient(180deg, #f7c4cf 0%, #2bbf8b 100%);
+    border-color: transparent;
+    color: #000;
+  }
+
+  .day-expand {
+    font-size: 16px;
+    color: var(--text3);
+    flex-shrink: 0;
+    transition: transform 0.2s;
+  }
+  .day-expand.open { transform: rotate(180deg); }
+
+  /* DETAIL */
+  .day-detail {
+    display: none;
+    padding: 0 14px 14px;
+    border-top: 1px solid rgba(133, 92, 104, 0.12);
+    margin-top: 0;
+  }
+  .day-detail.visible { display: block; }
+  .detail-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-top: 12px;
+  }
+  .detail-row {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .detail-icon-sm {
+    font-size: 14px;
+    min-width: 20px;
+    margin-top: 1px;
+  }
+  .detail-content { flex: 1; }
+  .detail-label-sm {
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text3);
+    margin-bottom: 2px;
+  }
+  .detail-val-sm {
+    font-size: 13px;
+    color: var(--text);
+    line-height: 1.5;
+  }
+  .detail-notes {
+    background: rgba(255,255,255,0.62);
+    border-radius: 12px;
+    padding: 10px 12px;
+    margin-top: 4px;
+    font-size: 12px;
+    color: var(--text2);
+    line-height: 1.6;
+    border-left: 2px solid #ea7a8c;
+  }
+
+  /* RITMOS TAB */
+  .tab-section { display: none; padding: 1.25rem; }
+  .tab-section.active { display: block; }
+
+  .ritmos-card {
+    background: var(--surface);
+    border: 1px solid rgba(133, 92, 104, 0.16);
+    border-radius: 18px;
+    overflow: hidden;
+    margin-bottom: 10px;
+    box-shadow: 0 16px 36px rgba(67, 43, 55, 0.06);
+    backdrop-filter: blur(12px);
+  }
+  .ritmo-row {
+    display: flex;
+    align-items: center;
+    padding: 12px 14px;
+    border-bottom: 1px solid rgba(133, 92, 104, 0.12);
+    gap: 10px;
+  }
+  .ritmo-row:last-child { border-bottom: none; }
+  .ritmo-color {
+    width: 4px;
+    height: 36px;
+    border-radius: 99px;
+    flex-shrink: 0;
+  }
+  .ritmo-info { flex: 1; }
+  .ritmo-name { font-size: 13px; font-weight: 500; color: var(--text); }
+  .ritmo-feel { font-size: 11px; color: var(--text3); margin-top: 2px; }
+  .ritmo-pace {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    color: var(--text);
+    text-align: right;
+    line-height: 1;
+  }
+  .ritmo-recovery {
+    font-size: 10px;
+    color: var(--text3);
+    text-align: right;
+    margin-top: 2px;
+  }
+
+  /* BOTTOM NAV */
+  .bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(255, 250, 251, 0.9);
+    backdrop-filter: blur(18px);
+    border-top: 1px solid rgba(133, 92, 104, 0.16);
+    display: flex;
+    z-index: 20;
+    box-shadow: 0 -10px 28px rgba(67, 43, 55, 0.07);
+  }
+  .nav-btn {
+    flex: 1;
+    padding: 12px 8px 16px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    color: var(--text3);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.5px;
+    transition: color 0.15s;
+  }
+  .nav-btn.active { color: var(--green-dark); }
+  .nav-icon { font-size: 20px; }
+
+  .main-content {
+    padding-bottom: 92px;
+    max-width: 920px;
+    margin: 0 auto;
+  }
+
+  /* Confetti / completion */
+  .toast {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-100px);
+    background: linear-gradient(135deg, #2bbf8b 0%, #f7c4cf 100%);
+    color: #1f1621;
+    padding: 10px 20px;
+    border-radius: 99px;
+    font-size: 13px;
+    font-weight: 600;
+    z-index: 100;
+    transition: transform 0.3s ease;
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+
+  .empty-state {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: var(--text3);
+    font-size: 14px;
+  }
+
+  .week-content,
+  .progress-section,
+  .week-nav,
+  .tab-section > div {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+
+  .tab-section > div {
+    padding-top: 0;
+  }
+
+  #tabInfo > div > div,
+  #tabRitmos .ritmos-card,
+  .progress-section,
+  .week-nav {
+    backdrop-filter: blur(12px);
+  }
+
+  #tabInfo > div > div {
+    background: var(--surface);
+    border-radius: 18px;
+    border: 1px solid rgba(133, 92, 104, 0.16);
+    box-shadow: 0 16px 36px rgba(67, 43, 55, 0.06);
+  }
+
+  .week-content {
+    padding-top: 1rem;
+  }
+
+  @media (min-width: 768px) {
+    .header,
+    .progress-section,
+    .week-nav,
+    .tab-section,
+    .week-content {
+      padding-left: 1.75rem;
+      padding-right: 1.75rem;
+    }
+
+    .header {
+      padding-top: 2.25rem;
+    }
+  }
+
+  @media (min-width: 480px) {
+    .header-title { font-size: 48px; }
+    .week-title-big { font-size: 34px; }
+  }
+</style>
+</head>
+<body>
+
+<div id="toast" class="toast"></div>
+
+<div class="main-content">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-label">🏁 Maratón de Panamá · 21K</div>
+    <div class="header-title">Plan 21K</div>
+    <div class="header-sub">20 Sep 2025 · Objetivo: 1:50:00</div>
+    <div class="header-stats">
+      <div class="stat">
+        <div class="stat-val">19</div>
+        <div class="stat-label">Semanas</div>
+      </div>
+      <div class="stat">
+        <div class="stat-val">5:12</div>
+        <div class="stat-label">Ritmo obj.</div>
+      </div>
+      <div class="stat">
+        <div class="stat-val" id="stat-done">0</div>
+        <div class="stat-label">Días ✓</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROGRESS -->
+  <div class="progress-section">
+    <div class="progress-label">Fases del plan</div>
+    <div class="phase-pills">
+      <span class="phase-pill pill-base">Base S1–5</span>
+      <span class="phase-pill pill-dev">Desarrollo S6–10</span>
+      <span class="phase-pill pill-pico">⚡ Pico S11–15</span>
+      <span class="phase-pill pill-taper">Tapering S16–18</span>
+      <span class="phase-pill pill-race">🏁 Carrera S19</span>
+    </div>
+    <div class="overall-bar">
+      <div class="overall-fill" id="overallBar" style="width:0%"></div>
+    </div>
+    <div class="progress-meta">
+      <span id="progressText">0 de 133 días completados</span>
+      <span id="progressPct">0%</span>
+    </div>
+  </div>
+
+  <!-- WEEK NAV -->
+  <div class="week-nav">
+    <div class="week-nav-label">Selecciona la semana</div>
+    <div class="week-scroll" id="weekScroll"></div>
+  </div>
+
+  <!-- TABS CONTENT -->
+  <div id="tabPlan" class="tab-section active">
+    <div class="week-content" id="weekContent"></div>
+  </div>
+
+  <div id="tabRitmos" class="tab-section">
+    <div style="padding-top:0">
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:28px;margin-bottom:4px;padding:1.25rem 0 0">Ritmos Objetivo</div>
+      <div style="font-size:12px;color:var(--text3);margin-bottom:1.25rem">Basado en 1:55:18 → objetivo 1:50:00</div>
+      <div class="ritmos-card">
+        <div class="ritmo-row">
+          <div class="ritmo-color" style="background:var(--green)"></div>
+          <div class="ritmo-info">
+            <div class="ritmo-name">Zona 2 / Fácil</div>
+            <div class="ritmo-feel">Hablas con frases completas</div>
+          </div>
+          <div>
+            <div class="ritmo-pace">5:45–6:15</div>
+            <div class="ritmo-recovery">sin recovery</div>
+          </div>
+        </div>
+        <div class="ritmo-row">
+          <div class="ritmo-color" style="background:#a78bfa"></div>
+          <div class="ritmo-info">
+            <div class="ritmo-name">Tempo / Umbral</div>
+            <div class="ritmo-feel">Incómodo pero sostenible</div>
+          </div>
+          <div>
+            <div class="ritmo-pace">5:05–5:15</div>
+            <div class="ritmo-recovery">continuo</div>
+          </div>
+        </div>
+        <div class="ritmo-row">
+          <div class="ritmo-color" style="background:var(--amber)"></div>
+          <div class="ritmo-info">
+            <div class="ritmo-name">Ritmo Carrera (MP)</div>
+            <div class="ritmo-feel">Controlado y moderado</div>
+          </div>
+          <div>
+            <div class="ritmo-pace">5:12</div>
+            <div class="ritmo-recovery">objetivo Panamá</div>
+          </div>
+        </div>
+        <div class="ritmo-row">
+          <div class="ritmo-color" style="background:#f97316"></div>
+          <div class="ritmo-info">
+            <div class="ritmo-name">Intervalos 400–600m</div>
+            <div class="ritmo-feel">Muy duro, casi máximo</div>
+          </div>
+          <div>
+            <div class="ritmo-pace">4:45–4:50</div>
+            <div class="ritmo-recovery">trote 90s–2min</div>
+          </div>
+        </div>
+        <div class="ritmo-row">
+          <div class="ritmo-color" style="background:var(--red)"></div>
+          <div class="ritmo-info">
+            <div class="ritmo-name">Intervalos 800m</div>
+            <div class="ritmo-feel">Duro pero sostenible</div>
+          </div>
+          <div>
+            <div class="ritmo-pace">4:50–4:55</div>
+            <div class="ritmo-recovery">trote 2–2:30min</div>
+          </div>
+        </div>
+        <div class="ritmo-row">
+          <div class="ritmo-color" style="background:#ec4899"></div>
+          <div class="ritmo-info">
+            <div class="ritmo-name">Intervalos 1000–1200m</div>
+            <div class="ritmo-feel">Duro pero controlado</div>
+          </div>
+          <div>
+            <div class="ritmo-pace">4:48–4:55</div>
+            <div class="ritmo-recovery">trote 2:30–3min</div>
+          </div>
+        </div>
+        <div class="ritmo-row">
+          <div class="ritmo-color" style="background:var(--green-dark)"></div>
+          <div class="ritmo-info">
+            <div class="ritmo-name">Fondo largo</div>
+            <div class="ritmo-feel">Conversacional todo el tiempo</div>
+          </div>
+          <div>
+            <div class="ritmo-pace">5:50–6:20</div>
+            <div class="ritmo-recovery">sin recovery</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:20px;margin:1.5rem 0 0.75rem">Regla de recovery</div>
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:14px;font-size:13px;color:var(--text2);line-height:1.7;border-left:3px solid var(--green)">
+        El recovery siempre en <strong style="color:var(--text)">trote suave 6:30–7:00/km</strong>, nunca caminando. La regla general: el recovery dura aproximadamente la <strong style="color:var(--text)">mitad del tiempo</strong> que duró el intervalo.
+      </div>
+
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:20px;margin:1.5rem 0 0.75rem">Calentamiento estándar</div>
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:14px;font-size:13px;color:var(--text2);line-height:1.7;border-left:3px solid var(--blue)">
+        <strong style="color:var(--text)">Intervalos y tempo:</strong> 10 min trote + 4–6 strides de 80m<br>
+        <strong style="color:var(--text)">Zona 2 y fondos:</strong> El calentamiento está integrado en los primeros kilómetros
+      </div>
+    </div>
+  </div>
+
+  <div id="tabInfo" class="tab-section">
+    <div style="padding-top:0">
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:28px;margin-bottom:1.25rem;padding:1.25rem 0 0">Tips Clave</div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:14px">
+          <div style="font-size:13px;font-weight:600;margin-bottom:6px">🌡️ Adaptación a Panamá</div>
+          <div style="font-size:12px;color:var(--text2);line-height:1.6">Calurosa y húmeda. Entrena algunos días al mediodía en Cartago para adaptarte. Llega 2–3 días antes y no hagas nada fuerte allá.</div>
+        </div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:14px">
+          <div style="font-size:13px;font-weight:600;margin-bottom:6px">💊 Nutrición en carrera</div>
+          <div style="font-size:12px;color:var(--text2);line-height:1.6">Geles Going en km 7 y km 14. Solo agua en los puestos — el Gatorade te cae mal. Tus geles ya traen sodio, potasio y electrolitos.</div>
+        </div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:14px">
+          <div style="font-size:13px;font-weight:600;margin-bottom:6px">🏋️ Gym en fase pico</div>
+          <div style="font-size:12px;color:var(--text2);line-height:1.6">Semanas 11–15: gym de pierna al 60% de volumen. En tapering (16–18): solo activación con pesos livianos y muchas reps.</div>
+        </div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:14px">
+          <div style="font-size:13px;font-weight:600;margin-bottom:6px">😴 Tapering</div>
+          <div style="font-size:12px;color:var(--text2);line-height:1.6">Sem 16–18 reduce KM a 70%, 50%, 30% del pico. Mantén 1–2 estímulos cortos de calidad. El descanso ES entrenamiento.</div>
+        </div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:14px">
+          <div style="font-size:13px;font-weight:600;margin-bottom:6px">🏁 Estrategia de carrera</div>
+          <div style="font-size:12px;color:var(--text2);line-height:1.6">Primeros 5km a 5:18–5:20/km (sal conservadora). Km 6–18 a 5:12/km. Últimos 3km lo que tengas. El calor de Panamá puede engañarte al inicio.</div>
+        </div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:14px">
+          <div style="font-size:13px;font-weight:600;margin-bottom:6px">❤️ Zona 2 es la base</div>
+          <div style="font-size:12px;color:var(--text2);line-height:1.6">70–75% del kilometraje en zona 2. No te aceleres los días fáciles — eso permite recuperarte para los estímulos duros del martes.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- BOTTOM NAV -->
+<div class="bottom-nav">
+  <button class="nav-btn active" onclick="switchTab('plan', this)">
+    <span class="nav-icon">📅</span>Plan
+  </button>
+  <button class="nav-btn" onclick="switchTab('ritmos', this)">
+    <span class="nav-icon">⚡</span>Ritmos
+  </button>
+  <button class="nav-btn" onclick="switchTab('info', this)">
+    <span class="nav-icon">💡</span>Tips
+  </button>
+</div>
+
+<script>
+const DAYS = ['Lun','Mar','Mié','Jue','Vie','Sáb','Dom'];
+
+const weeks = [
+  { num:1, tipo:'base', label:'Adaptación', dates:'11–17 May', km:35, days:[
+    {name:'Lun',title:'Pecho + Trícep',sub:'Gym',type:'gym',icon:'🏋️',detail:{cal:'—',ritmo:'—',rec:'—',afloje:'—',notas:'Volumen normal. Enfócate en técnica.'}},
+    {name:'Mar',title:'6×400m ✓',sub:'Intervalos — COMPLETADO',type:'done',icon:'✅',detail:{cal:'10 min trote + 4 strides',ritmo:'4:45–4:50/km por rep',rec:'Trote suave 90s entre reps',afloje:'10 min trote suave',notas:'Ya completado. ¡Buen trabajo!'}},
+    {name:'Mié',title:'Espalda + Bícep',sub:'Gym',type:'gym',icon:'🏋️',detail:{cal:'—',ritmo:'—',rec:'—',afloje:'—',notas:'Volumen normal.'}},
+    {name:'Jue',title:'Zona 2',sub:'45 min · 6:00–6:15/km',type:'run',icon:'🏃',detail:{cal:'Primeros 5 min muy suaves',ritmo:'6:00–6:15/km',rec:'No aplica (continuo)',afloje:'Últimos 5 min bajando',notas:'Debes poder hablar con frases completas todo el tiempo.'}},
+    {name:'Vie',title:'Pierna',sub:'Gym',type:'gym',icon:'🏋️',detail:{cal:'—',ritmo:'—',rec:'—',afloje:'—',notas:'Sentadilla, prensa, peso muerto rumano.'}},
+    {name:'Sáb',title:'Descanso',sub:'Recuperación activa',type:'rest',icon:'😴',detail:{cal:'—',ritmo:'—',rec:'—',afloje:'—',notas:'Caminata, movilidad, stretching.'}},
+    {name:'Dom',title:'Fondo largo',sub:'16km · 5:55–6:10/km',type:'run',icon:'🏃',detail:{cal:'Primeros 2km muy suaves',ritmo:'5:55–6:10/km todo el recorrido',rec:'No aplica',afloje:'Últimos 2km bajando el ritmo',notas:'Si sientes las piernas pesadas por el gym del viernes, es normal en semana 1.'}},
+  ]},
+  { num:2, tipo:'base', label:'Base', dates:'18–24 May', km:38, days:[
+    {name:'Lun',title:'Pecho + Trícep',sub:'Gym',type:'gym',icon:'🏋️',detail:{cal:'—',ritmo:'—',rec:'—',afloje:'—',notas:'Volumen normal.'}},
+    {name:'Mar',title:'6×800m',sub:'Intervalos medios',type:'run',icon:'⚡',detail:{cal:'10 min trote + 4–6 strides de 80m',ritmo:'4:50–4:55/km por rep',rec:'Trote suave 2–2:30 min entre reps (≈6:30–7:00/km)',afloje:'10 min trote suave',notas:'El primer rep siempre se siente el más duro. Si el ritmo no llega en rep 1, no fuerces — el cuerpo se activa en rep 2 y 3.'}},
+    {name:'Mié',title:'Espalda + Bícep',sub:'Gym',type:'gym',icon:'🏋️',detail:{cal:'—',ritmo:'—',rec:'—',afloje:'—',notas:'Volumen normal.'}},
+    {name:'Jue',title:'Zona 2',sub:'50 min · 5:55–6:10/km',type:'run',icon:'🏃',detail:{cal:'Primeros 5 min muy suaves',ritmo:'5:55–6:10/km',rec:'No aplica',afloje:'Últimos 5 min bajando',notas:'Día de recuperación activa después de los intervalos. No te pases del ritmo.'}},
+    {name:'Vie',title:'Pierna',sub:'Gym',type:'gym',icon:'🏋️',detail:{cal:'—',ritmo:'—',rec:'—',afloje:'—',notas:'Sentadilla, prensa, peso muerto rumano.'}},
+    {name:'Sáb',title:'Descanso',sub:'Recuperación activa',type:'rest',icon:'😴',detail:{cal:'—',ritmo:'—',rec:'—',afloje:'—',notas:'Recuperación total. Movilidad y stretching opcional.'}},
+    {name:'Dom',title:'Fondo largo',sub:'18km · 5:50–6:05/km',type:'run',icon:'🏃',detail:{cal:'Primeros 2km muy suaves',ritmo:'5:50–6:05/km',rec:'No aplica',afloje:'Últimos 2km bajando el ritmo',notas:'Prioriza la sensación sobre el reloj. Toma agua cada 5–6km.'}},
+  ]},
+  { num:3, tipo:'base', label:'Base', dates:'25–31 May', km:40, days:[
+    {name:'Lun',title:'Pecho + Trícep',sub:'Gym',type:'gym',icon:'🏋️',detail:{cal:'—',ritmo:'—',rec:'—',afloje:'—',notas:'Volumen normal.'}},
+    {name:'Mar',title:'Tempo 4×10min',sub:'Umbral · 5:08–5:12/km',type:'run',icon:'⚡',detail:{cal:'10 min trote + 4 strides',ritmo:'5:08–5:12/km por bloque',rec:'Trote suave 2 min entre bloques',afloje:'10 min trote suave',notas:'El tempo debe sentirse incómodo pero sostenible. Si puedes hablar con frases, acelera un poco.'}},
+    {name:'Mié',title:'Espalda + Bícep',sub:'Gym',type:'gym',icon:'🏋️',detail:{cal:'—',ritmo:'—',rec:'—',afloje:'—',notas:'Volumen normal.'}},
+    {name:'Jue',title:'Zona 2',sub:'55 min · 5:55–6:10/km',type:'run',icon:'🏃',detail:{cal:'Primeros 5 min muy suaves',ritmo:'5:55–6:10/km',rec:'No aplica',afloje:'Últimos 5 min',notas:'Recuperación activa. Piernas fáciles, respiración tranquila.'}},
+    {name:'Vie',title:'Pierna',sub:'Gym',type:'gym',icon:'🏋️',detail:{cal:'—',ritmo:'—',rec:'—',afloje:'—',notas:'Sentadilla, prensa, peso muerto rumano.'}},
+    {name:'Sáb',title:'Descanso',sub:'Recuperación activa',type:'rest',icon:'😴',detail:{cal:'—',ritmo:'—',rec:'—',afloje:'—',notas:'Recuperación total.'}},
+    {name:'Dom',title:'Fondo largo',sub:'18km · 5:50–6:05/km',type:'run',icon:'🏃',detail:{cal:'Primeros 2km muy suaves',ritmo:'5:50–6:05/km',rec:'No aplica',afloje:'Últimos 2km suaves',notas:'Igual que semana 2 pero debes sentirte más cómodo al mismo ritmo.'}},
+  ]},
+  { num:4, tipo:'base', label:'Recuperación', dates:'1–7 Jun', km:32, days:[
+    {name:'Lun',title:'Pecho + Trícep',sub:'Gym',type:'gym',icon:'🏋️',detail:{cal:'—',ritmo:'—',rec:'—',afloje:'—',notas:'Semana de recuperación — reduce volumen 20%.'}},
+    {name:'Mar',title:'5×600m',sub:'Intervalos suaves',type:'run',icon:'⚡',detail:{cal:'10 min trote + 4 strides',ritmo:'4:50–4:55/km (un poco más suave)',rec:'Trote suave 2 min entre reps',afloje:'10 min trote suave',notas:'Semana de descarga. No fuerces el ritmo — mantén el estímulo sin acumular fatiga.'}},
+    {name:'Mié',title:'Espalda + Bícep',sub:'Gym',type:'gym',icon:'🏋️',detail:{cal:'—',ritmo:'—',rec:'—',afloje:'—',notas:'Reduce volumen 20%.'}},
+    {name:'Jue',title:'Zona 2',sub:'40 min · 6:00–6:15/km',type:'run',icon:'🏃',detail:{cal:'Primeros 5 min',ritmo:'6:00–6:15/km',rec:'No aplica',afloje:'Últimos 5 min',notas:'Muy relajado. Semana de descarga.'}},
+    {name:'Vie',title:'Pierna',sub:'Gym (−20%)',type:'gym',icon:'🏋️',detail:{cal:'—',ritmo:'—',rec:'—',afloje:'—',notas:'Reduce volumen 20%.'}},
+    {name:'Sáb',title:'Descanso',sub:'Recuperación activa',type:'rest',icon:'😴',detail:{cal:'—',ritmo:'—',rec:'—',afloje:'—',notas:'Recuperación total.'}},
+    {name:'Dom',title:'Fondo largo',sub:'14km · 6:00–6:15/km',type:'run',icon:'🏃',detail:{cal:'Primeros 2km suaves',ritmo:'6:00–6:15/km',rec:'No aplica',afloje:'Últimos 2km',notas:'El fondo más corto del plan. El cuerpo asimila aquí todo lo de las 3 semanas anteriores.'}},
+  ]},
+  { num:5, tipo:'base', label:'Cierre base', dates:'8–14 Jun', km:42, days:[
+    {name:'Lun',title:'Pecho + Trícep',sub:'Gym',type:'gym',icon:'🏋️',detail:{cal:'—',ritmo:'—',rec:'—',afloje:'—',notas:'Vuelves a volumen normal.'}},
+    {name:'Mar',title:'5×1000m',sub:'Intervalos largos',type:'run',icon:'⚡',detail:{cal:'10 min trote + 4–6 strides',ritmo:'4:48–4:52/km por rep',rec:'Trote suave 2:30–3 min entre reps',afloje:'10 min trote suave',notas:'Primera sesión de 1000m. No salgas demasiado rápido en el primer rep — es el de calibración.'}},
+    {name:'Mié',title:'Espalda + Bícep',sub:'Gym',type:'gym',icon:'🏋️',detail:{cal:'—',ritmo:'—',rec:'—',afloje:'—',notas:'Volumen normal.'}},
+    {name:'Jue',title:'Zona 2',sub:'60 min · 5:55–6:10/km',type:'run',icon:'🏃',detail:{cal:'Primeros 5 min',ritmo:'5:55–6:10/km',rec:'No aplica',afloje:'Últimos 5 min',notas:'El estímulo aeróbico más largo hasta ahora en día fácil.'}},
+    {name:'Vie',title:'Pierna',sub:'Gym',type:'gym',icon:'🏋️',detail:{cal:'—',ritmo:'—',rec:'—',afloje:'—',notas:'Volumen normal.'}},
+    {name:'Sáb',title:'Descanso',sub:'Recuperación activa',type:'rest',icon:'😴',detail:{cal:'—',ritmo:'—',rec:'—',afloje:'—',notas:'Recuperación total.'}},
+    {name:'Dom',title:'Fondo largo',sub:'20km · 5:50–6:05/km',type:'run',icon:'🏃',detail:{cal:'Primeros 2km suaves',ritmo:'5:50–6:05/km',rec:'No aplica',afloje:'Últimos 2km',notas:'Primer fondo de 20km. Lleva gel o carbohidratos a partir del km 14.'}},
+  ]},
+  { num:6, tipo:'desarrollo', label:'Desarrollo', dates:'15–21 Jun', km:44, days:[
+    {name:'Lun',title:'Pecho + Trícep',sub:'Gym',type:'gym',icon:'🏋️',detail:{cal:'—',ritmo:'—',rec:'—',afloje:'—',notas:'Inicio fase desarrollo.'}},
+    {name:'Mar',title:'6×1000m',sub:'Intervalos largos',type:'run',icon:'⚡',detail:{cal:'10 min trote + 4–6 strides',ritmo:'4:48–4:52/km por rep',rec:'Trote suave 2:30–3 min entre reps',afloje:'10 min trote suave',notas:'Un rep más que la semana 5. La fatiga total debe ser similar.'}},
+    {name:'Mié',title:'Espalda + Bícep',sub:'Gym',type:'gym',icon:'🏋️',detail:{cal:'—',ritmo:'—',rec:'—',afloje:'—',notas:'Volumen normal.'}},
+    {name:'Jue',title:'Tempo 30 min',sub:'Umbral continuo · 5:08–5:12/km',type:'run',icon:'⚡',detail:{cal:'10 min trote + 4 strides',ritmo:'5:08–5:12/km',rec:'No aplica (continuo)',afloje:'10 min trote suave',notas:'Primera sesión de tempo continuo. Los primeros 10 min se sienten bien — ahí el cuerpo te miente.'}},
+    {name:'Vie',title:'Pierna',sub:'Gym',type:'gym',icon:'🏋️',detail:{cal:'—',ritmo:'—',rec:'—',afloje:'—',notas:'Volumen normal.'}},
+    {name:'Sáb',title:'Descanso',sub:'Recuperación activa',type:'rest',icon:'😴',detail:{cal:'—',ritmo:'—',rec:'—',afloje:'—',notas:'Recuperación total.'}},
+    {name:'Dom',title:'Fondo largo',sub:'20km · 5:50–6:05/km',type:'run',icon:'🏃',detail:{cal:'Primeros 2km suaves',ritmo:'5:50–6:05/km',rec:'No aplica',afloje:'Últimos 2km',notas:'Mismo volumen que sem 5 pero con más carga semanal.'}},
+  ]},
+  { num:7, tipo:'desarrollo', label:'Desarrollo', dates:'22–28 Jun', km:46, days:[
+    {name:'Lun',title:'Pecho + Trícep',sub:'Gym',type:'gym',icon:'🏋️',detail:{cal:'—',ritmo:'—',rec:'—',afloje:'—',notas:'Volumen normal.'}},
+    {name:'Mar',title:'6×1200m',sub:'Intervalos largos',type:'run',icon:'⚡',detail:{cal:'10 min trote + 4–6 strides',ritmo:'4:48–4:55/km por rep',rec:'Trote suave 3 min entre reps',afloje:'10 min trote suave',notas:'Los 1200m son el intervalo más específico para media maratón.'}},
+    {name:'Mié',title:'Espalda + Bícep',sub:'Gym',type:'gym',icon:'🏋️',detail:{cal:'—',ritmo:'—',rec:'—',afloje:'—',notas:'Volumen normal.'}},
+    {name:'Jue',title:'Tempo 35 min',sub:'Umbral continuo · 5:06–5:10/km',type:'run',icon:'⚡',detail:{cal:'10 min trote + 4 strides',ritmo:'5:06–5:10/km',rec:'No aplica (continuo)',afloje:'10 min trote suave',notas:'5 min más que la semana anterior. Los últimos 10 min son donde se hace el trabajo real.'}},
+    {name:'Vie',title:'Pierna',sub:'Gym',type:'gym',icon:'🏋️',detail:{cal:'—',ritmo:'—',rec:'—',afloje:'—',notas:'Volumen normal.'}},
+    {name:'Sáb',title:'Descanso',sub:'Recuperación activa',type:'rest',icon:'😴',detail:{cal:'—',ritmo:'—',rec:'—',afloje:'—',notas:'Recuperación total.'}},
+    {name:'Dom',title:'Fondo largo',sub:'21km · 5:45–6:00/km',type:'run',icon:'🏃',detail:{cal:'Primeros 2km suaves',ritmo:'5:45–6:00/km',rec:'No aplica',afloje:'Últimos 2km',notas:'Distancia de carrera completa en entrenamiento. Muy buen indicador de forma.'}},
+  ]},
+  { num:8, tipo:'desarrollo', label:'Recuperación', dates:'29 Jun–5 Jul', km:35, days:[
+    {name:'Lun',title:'Pecho + Trícep',sub:'Gym (−20%)',type:'gym',icon:'🏋️',detail:{cal:'—',ritmo:'—',rec:'—',afloje:'—',notas:'Reduce volumen 20%.'}},
+    {name:'Mar',title:'5×800m',sub:'Intervalos suaves',type:'run',icon:'⚡',detail:{cal:'10 min trote + 4 strides',ritmo:'4:55–5:00/km (más suave)',rec:'Trote suave 2 min entre reps',afloje:'10 min trote suave',notas:'Semana de descarga. El cuerpo asimila las cargas de las semanas 6 y 7.'}},
+    {name:'Mié',title:'Espalda + Bícep',sub:'Gym (−20%)',type:'gym',icon:'🏋️',detail:{cal:'—',ritmo:'—',rec:'—',afloje:'—',notas:'Reduce volumen 20%.'}},
+    {name:'Jue',title:'Zona 2',sub:'45 min · 6:00–6:15/km',type:'run',icon:'🏃',detail:{cal:'Primeros 5 min',ritmo:'6:00–6:15/km',rec:'No aplica',afloje:'Últimos 5 min',notas:'Muy relajado. Semana de descarga.'}},
+    {name:'Vie',title:'Pierna',sub:'Gym (−20%)',type:'gym',icon:'🏋️',detail:{cal:'—',ritmo:'—',rec:'—',afloje:'—',notas:'Reduce volumen 20%.'}},
+    {name:'Sáb',title:'Descanso',sub:'Recuperación activa',type:'rest',icon:'😴',detail:{cal:'—',ritmo:'—',rec:'—',afloje:'—',notas:'Recuperación total.'}},
+    {name:'Dom',title:'Fondo largo',sub:'16km · fácil',type:'run',icon:'🏃',detail:{cal:'Primeros 2km',ritmo:'6:00–6:15/km',rec:'No aplica',afloje:'Últimos 2km',notas:'Fondo corto de descarga. Disfrútalo.'}},
+  ]},
+  { num:9, tipo:'desarrollo', label:'Desarrollo', dates:'6–12 Jul', km:48, days:[
+    {name:'Lun',title:'Pecho + Trícep',sub:'Gym',type:'gym',icon:'🏋️',detail:{cal:'—',ritmo:'—',rec:'—',afloje:'—',notas:'Volumen normal.'}},
+    {name:'Mar',title:'7×1000m',sub:'Intervalos largos',type:'run',icon:'⚡',detail:{cal:'10 min trote + 4–6 strides',ritmo:'4:48–4:52/km por rep',rec:'Trote suave 2:30–3 min entre reps',afloje:'10 min trote suave',notas:'Si los últimos 2 reps bajan mucho el ritmo, para en rep 6 — calidad sobre cantidad.'}},
+    {name:'Mié',title:'Espalda + Bícep',sub:'Gym',type:'gym',icon:'🏋️',detail:{cal:'—',ritmo:'—',rec:'—',afloje:'—',notas:'Volumen normal.'}},
+    {name:'Jue',title:'Tempo 40 min',sub:'Umbral continuo · 5:06–5:10/km',type:'run',icon:'⚡',detail:{cal:'10 min trote + 4 strides',ritmo:'5:06–5:10/km',rec:'No aplica (continuo)',afloje:'10 min trote suave',notas:'Si el día está muy caluroso ajusta el ritmo 5–8 seg/km más lento.'}},
+    {name:'Vie',title:'Pierna',sub:'Gym',type:'gym',icon:'🏋️',detail:{cal:'—',ritmo:'—',rec:'—',afloje:'—',notas:'Volumen normal.'}},
+    {name:'Sáb',title:'Descanso',sub:'Recuperación activa',type:'rest',icon:'😴',detail:{cal:'—',ritmo:'—',rec:'—',afloje:'—',notas:'Recuperación total.'}},
+    {name:'Dom',title:'Fondo largo',sub:'22km · 5:45–6:00/km',type:'run',icon:'🏃',detail:{cal:'Primeros 2km suaves',ritmo:'5:45–6:00/km',rec:'No aplica',afloje:'Últimos 2km',notas:'Lleva gel desde el km 14. Toma agua regularmente.'}},
+  ]},
+  { num:10, tipo:'desarrollo', label:'Desarrollo', dates:'13–19 Jul', km:50, days:[
+    {name:'Lun',title:'Pecho + Trícep',sub:'Gym',type:'gym',icon:'🏋️',detail:{cal:'—',ritmo:'—',rec:'—',afloje:'—',notas:'Última semana de desarrollo fuerte.'}},
+    {name:'Mar',title:'7×1200m',sub:'Intervalos largos',type:'run',icon:'⚡',detail:{cal:'10 min trote + 4–6 strides',ritmo:'4:48–4:55/km por rep',rec:'Trote suave 3 min entre reps',afloje:'10 min trote suave',notas:'7 reps de 1200m es el pico de volumen de intervalos antes de la fase pico.'}},
+    {name:'Mié',title:'Espalda + Bícep',sub:'Gym',type:'gym',icon:'🏋️',detail:{cal:'—',ritmo:'—',rec:'—',afloje:'—',notas:'Volumen normal.'}},
+    {name:'Jue',title:'Tempo 40min + MP',sub:'Umbral + ritmo carrera',type:'run',icon:'⚡',detail:{cal:'10 min trote + 4 strides',ritmo:'30 min a 5:08/km → últimos 10 min a 5:12/km (MP)',rec:'No aplica (continuo)',afloje:'10 min trote suave',notas:'Primera vez que introduces ritmo de carrera al final de un tempo. La transición de 5:08 a 5:12 se debe sentir como un alivio.'}},
+    {name:'Vie',title:'Pierna',sub:'Gym',type:'gym',icon:'🏋️',detail:{cal:'—',ritmo:'—',rec:'—',afloje:'—',notas:'Volumen normal.'}},
+    {name:'Sáb',title:'Descanso',sub:'Recuperación activa',type:'rest',icon:'😴',detail:{cal:'—',ritmo:'—',rec:'—',afloje:'—',notas:'Recuperación total.'}},
+    {name:'Dom',title:'Fondo largo + MP',sub:'22km · últimos 4km a 5:12',type:'run',icon:'🏃',detail:{cal:'Primeros 2km suaves',ritmo:'18km a 5:50–6:00/km → últimos 4km a 5:12/km',rec:'No aplica',afloje:'No hay — terminas fuerte',notas:'Primera vez que haces el fondo con kilómetros a ritmo de carrera al final.'}},
+  ]},
+  { num:11, tipo:'pico', label:'Pico inicio', dates:'20–26 Jul', km:52, days:[
+    {name:'Lun',title:'Pecho + Trícep',sub:'Gym',type:'gym',icon:'🏋️',detail:{cal:'—',ritmo:'—',rec:'—',afloje:'—',notas:'Inicio fase pico.'}},
+    {name:'Mar',title:'8×1000m',sub:'Intervalos largos',type:'run',icon:'⚡',detail:{cal:'10 min trote + 4–6 strides',ritmo:'4:45–4:50/km por rep',rec:'Trote suave 2:30–3 min entre reps',afloje:'10 min trote suave',notas:'Ritmo más exigente. Si en rep 6–8 no llegas al ritmo, está bien — el volumen es lo importante.'}},
+    {name:'Mié',title:'Espalda + Bícep',sub:'Gym',type:'gym',icon:'🏋️',detail:{cal:'—',ritmo:'—',rec:'—',afloje:'—',notas:'Volumen normal.'}},
+    {name:'Jue',title:'Tempo 45 min',sub:'Umbral continuo · 5:05–5:10/km',type:'run',icon:'⚡',detail:{cal:'10 min trote + 4 strides',ritmo:'5:05–5:10/km',rec:'No aplica (continuo)',afloje:'10 min trote suave',notas:'Divide mentalmente en 3 bloques de 15 min.'}},
+    {name:'Vie',title:'Pierna −60%',sub:'Gym — volumen reducido',type:'gym',icon:'🏋️',detail:{cal:'—',ritmo:'—',rec:'—',afloje:'—',notas:'Desde aquí el gym de pierna baja al 60%. Mantén los ejercicios pero baja series y/o peso.'}},
+    {name:'Sáb',title:'Descanso',sub:'Recuperación activa',type:'rest',icon:'😴',detail:{cal:'—',ritmo:'—',rec:'—',afloje:'—',notas:'Recuperación total.'}},
+    {name:'Dom',title:'Fondo largo + MP',sub:'23km · últimos 5km a 5:12',type:'run',icon:'🏃',detail:{cal:'Primeros 2km suaves',ritmo:'18km a 5:45–5:55/km → últimos 5km a 5:12/km',rec:'No aplica',afloje:'No hay — terminas fuerte',notas:'Gel en km 13 y km 18. Los últimos 5km a MP son el núcleo del entrenamiento.'}},
+  ]},
+  { num:12, tipo:'pico', label:'Pico', dates:'27 Jul–2 Ago', km:54, days:[
+    {name:'Lun',title:'Pecho + Trícep',sub:'Gym',type:'gym',icon:'🏋️',detail:{cal:'—',ritmo:'—',rec:'—',afloje:'—',notas:'Volumen normal.'}},
+    {name:'Mar',title:'8×1200m',sub:'Intervalos largos',type:'run',icon:'⚡',detail:{cal:'10 min trote + 4–6 strides',ritmo:'4:48–4:55/km por rep',rec:'Trote suave 3 min entre reps',afloje:'10 min trote suave',notas:'8 reps de 1200m = casi 10km de trabajo de calidad. Si llegas al rep 6 con el ritmo, ya es un éxito.'}},
+    {name:'Mié',title:'Espalda + Bícep',sub:'Gym',type:'gym',icon:'🏋️',detail:{cal:'—',ritmo:'—',rec:'—',afloje:'—',notas:'Volumen normal.'}},
+    {name:'Jue',title:'Tempo 45 min',sub:'Umbral continuo · 5:05–5:10/km',type:'run',icon:'⚡',detail:{cal:'10 min trote + 4 strides',ritmo:'5:05–5:10/km',rec:'No aplica (continuo)',afloje:'10 min trote suave',notas:'Si se siente más cómoda que la semana anterior, es señal de progreso real.'}},
+    {name:'Vie',title:'Pierna −60%',sub:'Gym — volumen reducido',type:'gym',icon:'🏋️',detail:{cal:'—',ritmo:'—',rec:'—',afloje:'—',notas:'Volumen reducido. Prioridad al fondo del domingo.'}},
+    {name:'Sáb',title:'Descanso',sub:'Recuperación activa',type:'rest',icon:'😴',detail:{cal:'—',ritmo:'—',rec:'—',afloje:'—',notas:'Recuperación total.'}},
+    {name:'Dom',title:'Fondo largo + MP',sub:'24km · últimos 6km a 5:12',type:'run',icon:'🏃',detail:{cal:'Primeros 2km suaves',ritmo:'18km a 5:45–5:55/km → últimos 6km a 5:12/km',rec:'No aplica',afloje:'No hay — terminas fuerte',notas:'Gel en km 13 y km 19. 24km es territorio nuevo — confía en el proceso.'}},
+  ]},
+  { num:13, tipo:'pico', label:'Recuperación pico', dates:'3–9 Ago', km:42, days:[
+    {name:'Lun',title:'Pecho + Trícep',sub:'Gym (−20%)',type:'gym',icon:'🏋️',detail:{cal:'—',ritmo:'—',rec:'—',afloje:'—',notas:'Semana de descarga antes del pico máximo.'}},
+    {name:'Mar',title:'6×1000m',sub:'Intervalos suaves',type:'run',icon:'⚡',detail:{cal:'10 min trote + 4 strides',ritmo:'4:52–4:58/km (más suave)',rec:'Trote suave 3 min entre reps',afloje:'10 min trote suave',notas:'Semana de descarga. El cuerpo absorbe las semanas 11 y 12.'}},
+    {name:'Mié',title:'Espalda + Bícep',sub:'Gym (−20%)',type:'gym',icon:'🏋️',detail:{cal:'—',ritmo:'—',rec:'—',afloje:'—',notas:'Reduce volumen 20%.'}},
+    {name:'Jue',title:'Zona 2',sub:'50 min · 6:00–6:15/km',type:'run',icon:'🏃',detail:{cal:'Primeros 5 min',ritmo:'6:00–6:15/km',rec:'No aplica',afloje:'Últimos 5 min',notas:'Sustituyes el tempo por zona 2. Muy relajado.'}},
+    {name:'Vie',title:'Pierna −60%',sub:'Gym — volumen reducido',type:'gym',icon:'🏋️',detail:{cal:'—',ritmo:'—',rec:'—',afloje:'—',notas:'Volumen reducido.'}},
+    {name:'Sáb',title:'Descanso',sub:'Recuperación activa',type:'rest',icon:'😴',detail:{cal:'—',ritmo:'—',rec:'—',afloje:'—',notas:'Recuperación total.'}},
+    {name:'Dom',title:'Fondo largo',sub:'18km · fácil',type:'run',icon:'🏃',detail:{cal:'Primeros 2km suaves',ritmo:'6:00–6:15/km todo fácil',rec:'No aplica',afloje:'Últimos 2km',notas:'Fondo de descarga. Sin MP al final. El cuerpo descansa para el pico máximo.'}},
+  ]},
+  { num:14, tipo:'pico', label:'⚡ PICO MÁXIMO', dates:'10–16 Ago', km:56, days:[
+    {name:'Lun',title:'Pecho + Trícep',sub:'Gym',type:'gym',icon:'🏋️',detail:{cal:'—',ritmo:'—',rec:'—',afloje:'—',notas:'La semana más dura del plan. Mantén el gym pero no te excedas.'}},
+    {name:'Mar',title:'8×1200m',sub:'Intervalos — máximo',type:'run',icon:'⚡',detail:{cal:'10 min trote + 4–6 strides',ritmo:'4:45–4:52/km por rep',rec:'Trote suave 3 min entre reps',afloje:'10 min trote suave',notas:'La sesión de intervalos más exigente del plan. Duerme bien la noche anterior.'}},
+    {name:'Mié',title:'Espalda + Bícep',sub:'Gym',type:'gym',icon:'🏋️',detail:{cal:'—',ritmo:'—',rec:'—',afloje:'—',notas:'Volumen normal.'}},
+    {name:'Jue',title:'Tempo largo 50 min',sub:'Umbral · 5:05–5:10/km',type:'run',icon:'⚡',detail:{cal:'10 min trote + 4 strides',ritmo:'5:05–5:10/km',rec:'No aplica (continuo)',afloje:'10 min trote suave',notas:'El tempo más largo del plan. Divide en bloques mentales: 20+20+10.'}},
+    {name:'Vie',title:'Pierna −60%',sub:'Gym — volumen reducido',type:'gym',icon:'🏋️',detail:{cal:'—',ritmo:'—',rec:'—',afloje:'—',notas:'El domingo es el entrenamiento más importante del ciclo.'}},
+    {name:'Sáb',title:'Descanso',sub:'Descanso total',type:'rest',icon:'😴',detail:{cal:'—',ritmo:'—',rec:'—',afloje:'—',notas:'Descanso total. Come bien. Duerme bien.'}},
+    {name:'Dom',title:'⚡ Fondo 25km + MP',sub:'25km · últimos 7km a 5:12',type:'run',icon:'🏃',detail:{cal:'Primeros 2km suaves',ritmo:'18km a 5:45–5:55/km → últimos 7km a 5:12/km',rec:'No aplica',afloje:'No hay — terminas fuerte',notas:'El entrenamiento más importante del ciclo. Gel en km 13, km 18 y km 22. Si completas este, llegás a Panamá lista.'}},
+  ]},
+  { num:15, tipo:'pico', label:'Cierre pico', dates:'17–23 Ago', km:50, days:[
+    {name:'Lun',title:'Pecho + Trícep',sub:'Gym',type:'gym',icon:'🏋️',detail:{cal:'—',ritmo:'—',rec:'—',afloje:'—',notas:'Volumen normal.'}},
+    {name:'Mar',title:'6×1000m',sub:'Intervalos largos',type:'run',icon:'⚡',detail:{cal:'10 min trote + 4–6 strides',ritmo:'4:48–4:52/km por rep',rec:'Trote suave 2:30–3 min entre reps',afloje:'10 min trote suave',notas:'Cierre de la fase pico. Debes sentirlos más manejables que en sem 14.'}},
+    {name:'Mié',title:'Espalda + Bícep',sub:'Gym',type:'gym',icon:'🏋️',detail:{cal:'—',ritmo:'—',rec:'—',afloje:'—',notas:'Volumen normal.'}},
+    {name:'Jue',title:'Tempo 40 min',sub:'Umbral continuo · 5:06–5:10/km',type:'run',icon:'⚡',detail:{cal:'10 min trote + 4 strides',ritmo:'5:06–5:10/km',rec:'No aplica (continuo)',afloje:'10 min trote suave',notas:'Bajás 10 min respecto al pico. Debes sentirte más cómodo a este ritmo.'}},
+    {name:'Vie',title:'Pierna −60%',sub:'Gym — volumen reducido',type:'gym',icon:'🏋️',detail:{cal:'—',ritmo:'—',rec:'—',afloje:'—',notas:'Volumen reducido.'}},
+    {name:'Sáb',title:'Descanso',sub:'Recuperación activa',type:'rest',icon:'😴',detail:{cal:'—',ritmo:'—',rec:'—',afloje:'—',notas:'Recuperación total.'}},
+    {name:'Dom',title:'Fondo largo + MP',sub:'22km · últimos 5km a 5:12',type:'run',icon:'🏃',detail:{cal:'Primeros 2km suaves',ritmo:'17km a 5:45–5:55/km → últimos 5km a 5:12/km',rec:'No aplica',afloje:'No hay — terminas fuerte',notas:'Último fondo largo del plan. A partir de aquí empieza el tapering.'}},
+  ]},
+  { num:16, tipo:'taper', label:'Tapering fuerte', dates:'24–30 Ago', km:38, days:[
+    {name:'Lun',title:'Pecho + Trícep',sub:'Activación',type:'gym',icon:'🏋️',detail:{cal:'—',ritmo:'—',rec:'—',afloje:'—',notas:'Pesos livianos, muchas reps. Activación neuromuscular, no fatiga.'}},
+    {name:'Mar',title:'5×800m',sub:'Intervalos medios',type:'run',icon:'⚡',detail:{cal:'10 min trote + 4 strides',ritmo:'4:50–4:55/km por rep',rec:'Trote suave 2 min entre reps',afloje:'10 min trote suave',notas:'Tapering. Menos volumen pero mismo ritmo. Mantén la intensidad, baja la cantidad.'}},
+    {name:'Mié',title:'Espalda + Bícep',sub:'Activación',type:'gym',icon:'🏋️',detail:{cal:'—',ritmo:'—',rec:'—',afloje:'—',notas:'Pesos livianos, muchas reps.'}},
+    {name:'Jue',title:'Tempo 25 min',sub:'Umbral · 5:08–5:12/km',type:'run',icon:'⚡',detail:{cal:'10 min trote + 4 strides',ritmo:'5:08–5:12/km',rec:'No aplica (continuo)',afloje:'10 min trote suave',notas:'Tempo corto de mantenimiento. No debe sentirse duro.'}},
+    {name:'Vie',title:'Pierna',sub:'Activación',type:'gym',icon:'🏋️',detail:{cal:'—',ritmo:'—',rec:'—',afloje:'—',notas:'Pesos muy livianos. Sentadilla goblet, estocadas, elevaciones de talón. Sin fatiga.'}},
+    {name:'Sáb',title:'Descanso',sub:'Recuperación activa',type:'rest',icon:'😴',detail:{cal:'—',ritmo:'—',rec:'—',afloje:'—',notas:'Recuperación total.'}},
+    {name:'Dom',title:'Fondo 18km + MP',sub:'Últimos 3km a 5:12',type:'run',icon:'🏃',detail:{cal:'Primeros 2km suaves',ritmo:'15km a 5:50–6:00/km → últimos 3km a 5:12/km',rec:'No aplica',afloje:'No hay',notas:'Último fondo largo del ciclo. Los últimos 3km a MP te recuerdan el ritmo objetivo.'}},
+  ]},
+  { num:17, tipo:'taper', label:'Tapering medio', dates:'31 Ago–6 Sep', km:28, days:[
+    {name:'Lun',title:'Pecho',sub:'Activación muy liviana',type:'gym',icon:'🏋️',detail:{cal:'—',ritmo:'—',rec:'—',afloje:'—',notas:'Muy liviano. Solo activación.'}},
+    {name:'Mar',title:'4×600m',sub:'Intervalos cortos',type:'run',icon:'⚡',detail:{cal:'10 min trote + 4 strides',ritmo:'4:48–4:52/km por rep',rec:'Trote suave 2 min entre reps',afloje:'10 min trote suave',notas:'Sesión corta y vivaz. No es el momento de hacer PRs de entrenamiento.'}},
+    {name:'Mié',title:'Espalda',sub:'Activación muy liviana',type:'gym',icon:'🏋️',detail:{cal:'—',ritmo:'—',rec:'—',afloje:'—',notas:'Muy liviano.'}},
+    {name:'Jue',title:'Zona 2 + 10min MP',sub:'Aeróbico + recordatorio',type:'run',icon:'🏃',detail:{cal:'Primeros 5 min',ritmo:'30 min a 6:00/km → 10 min a 5:12/km',rec:'No aplica',afloje:'5 min suave',notas:'Los 10 min a MP son para que el cuerpo recuerde el ritmo objetivo.'}},
+    {name:'Vie',title:'Pierna',sub:'Activación muy liviana',type:'gym',icon:'🏋️',detail:{cal:'—',ritmo:'—',rec:'—',afloje:'—',notas:'Solo movimientos de activación. Nada que genere DOMS.'}},
+    {name:'Sáb',title:'Descanso',sub:'Recuperación activa',type:'rest',icon:'😴',detail:{cal:'—',ritmo:'—',rec:'—',afloje:'—',notas:'Recuperación total.'}},
+    {name:'Dom',title:'Fondo 14km',sub:'Todo fácil · 6:00–6:15/km',type:'run',icon:'🏃',detail:{cal:'Primeros 2km',ritmo:'6:00–6:15/km todo fácil',rec:'No aplica',afloje:'Últimos 2km',notas:'Completamente fácil. Disfruta el rodaje.'}},
+  ]},
+  { num:18, tipo:'taper', label:'Tapering suave', dates:'7–13 Sep', km:18, days:[
+    {name:'Lun',title:'Activación 20–25 min',sub:'Rodaje muy suave',type:'run',icon:'🏃',detail:{cal:'No aplica',ritmo:'6:10–6:20/km',rec:'No aplica',afloje:'No aplica',notas:'Muy suave. Solo para mantener las piernas activas.'}},
+    {name:'Mar',title:'Strides 6×100m',sub:'Activación neuromuscular',type:'run',icon:'⚡',detail:{cal:'10 min trote suave',ritmo:'Aceleración progresiva, ~4:00/km en los últimos 30m',rec:'Caminata 60–90 seg entre strides',afloje:'5 min trote suave',notas:'No son sprints. Son acelerones controlados. Activan las fibras rápidas sin fatiga.'}},
+    {name:'Mié',title:'Descanso',sub:'O caminata suave',type:'rest',icon:'😴',detail:{cal:'—',ritmo:'—',rec:'—',afloje:'—',notas:'Máximo 30 min caminando. Nada de correr.'}},
+    {name:'Jue',title:'Rodaje 30 min',sub:'Fácil · 6:00–6:15/km',type:'run',icon:'🏃',detail:{cal:'Incluido',ritmo:'6:00–6:15/km',rec:'No aplica',afloje:'Incluido',notas:'Suave. Sin presión.'}},
+    {name:'Vie',title:'Descanso',sub:'Recuperación total',type:'rest',icon:'😴',detail:{cal:'—',ritmo:'—',rec:'—',afloje:'—',notas:'Recuperación total.'}},
+    {name:'Sáb',title:'Rodaje 20min + strides',sub:'Activación previa',type:'run',icon:'🏃',detail:{cal:'Incluido',ritmo:'6:00/km + strides a 4:10/km',rec:'Caminata entre strides',afloje:'5 min suave',notas:'Último rodaje con calidad. Las piernas deben sentirse livianas.'}},
+    {name:'Dom',title:'Descanso total',sub:'Prepara la maleta',type:'rest',icon:'😴',detail:{cal:'—',ritmo:'—',rec:'—',afloje:'—',notas:'Cero running. Movilidad suave. Prepara la ropa, número, geles, zapatillas.'}},
+  ]},
+  { num:19, tipo:'race', label:'🏁 CARRERA', dates:'14–20 Sep', km:5, days:[
+    {name:'Lun',title:'Rodaje 20min + strides',sub:'Última activación',type:'run',icon:'🏃',detail:{cal:'Incluido',ritmo:'6:00/km + strides',rec:'Caminata entre strides',afloje:'5 min suave',notas:'Último entrenamiento real. Las piernas deben sentirse como resortes.'}},
+    {name:'Mar',title:'Descanso',sub:'O caminata',type:'rest',icon:'😴',detail:{cal:'—',ritmo:'—',rec:'—',afloje:'—',notas:'Máximo caminar. Hidratación y carbohidratos.'}},
+    {name:'Mié',title:'Rodaje 15 min',sub:'Muy suave',type:'run',icon:'🏃',detail:{cal:'No aplica',ritmo:'6:15–6:30/km',rec:'No aplica',afloje:'No aplica',notas:'Solo para mantener las piernas sueltas. Sin esfuerzo.'}},
+    {name:'Jue',title:'Descanso total',sub:'Carga de carbohidratos',type:'rest',icon:'😴',detail:{cal:'—',ritmo:'—',rec:'—',afloje:'—',notas:'Cero running. Hidratación máxima. Come bien: arroz, pasta, carbohidratos.'}},
+    {name:'Vie',title:'Descanso',sub:'Prepara todo',type:'rest',icon:'😴',detail:{cal:'—',ritmo:'—',rec:'—',afloje:'—',notas:'Prepara la ropa de carrera, número, geles, zapatillas. Todo listo la noche anterior.'}},
+    {name:'Sáb',title:'Viaje a Panamá',sub:'Caminar suave',type:'rest',icon:'✈️',detail:{cal:'—',ritmo:'—',rec:'—',afloje:'—',notas:'Llega, recoge el kit. Duerme temprano. Come carbohidratos en la cena.'}},
+    {name:'Dom',title:'🏁 CARRERA',sub:'20 Sep · Objetivo 1:50:00',type:'race',icon:'🏁',detail:{cal:'15 min trote suave + 4 strides antes de la largada',ritmo:'Km 1–5 a 5:18–5:20 → km 6–18 a 5:12 → últimos 3km todo lo que tengas',rec:'No aplica',afloje:'Trote suave post carrera',notas:'¡Sal conservadora! El calor de Panamá puede engañarte. Geles en km 7 y km 14. ¡Tú puedes! 💪🏾'}},
+  ]},
+];
+
+// STATE
+let state = JSON.parse(localStorage.getItem('panamaplan') || '{"checked":{},"weekDone":{}}');
+let currentWeek = 2;
+let openDay = null;
+
+function saveState() {
+  localStorage.setItem('panamaplan', JSON.stringify(state));
+}
+
+function getTotalDays() {
+  return weeks.reduce((s, w) => s + w.days.length, 0);
+}
+
+function getCheckedCount() {
+  return Object.values(state.checked).filter(Boolean).length;
+}
+
+function updateStats() {
+  const total = getTotalDays();
+  const done = getCheckedCount();
+  const pct = Math.round((done/total)*100);
+  document.getElementById('stat-done').textContent = done;
+  document.getElementById('overallBar').style.width = pct + '%';
+  document.getElementById('progressText').textContent = `${done} de ${total} días completados`;
+  document.getElementById('progressPct').textContent = pct + '%';
+}
+
+function isWeekDone(wNum) {
+  const w = weeks.find(x => x.num === wNum);
+  return w.days.every((_, i) => state.checked[`${wNum}-${i}`]);
+}
+
+function buildWeekNav() {
+  const scroll = document.getElementById('weekScroll');
+  scroll.innerHTML = '';
+  weeks.forEach(w => {
+    const btn = document.createElement('button');
+    const done = isWeekDone(w.num);
+    btn.className = `week-btn ${w.tipo === 'pico' ? 'pico' : w.tipo === 'taper' ? 'taper' : w.tipo === 'race' ? 'race' : ''} ${done ? 'done' : ''} ${w.num === currentWeek ? 'active' : ''}`;
+    btn.innerHTML = `<span class="wk-num">${w.num}</span><span class="wk-dot"></span>`;
+    btn.onclick = () => selectWeek(w.num);
+    scroll.appendChild(btn);
+  });
+}
+
+function selectWeek(num) {
+  currentWeek = num;
+  openDay = null;
+  buildWeekNav();
+  renderWeek();
+  // scroll selected into view
+  const btns = document.querySelectorAll('.week-btn');
+  const idx = weeks.findIndex(w => w.num === num);
+  if (btns[idx]) btns[idx].scrollIntoView({behavior:'smooth', block:'nearest', inline:'center'});
+}
+
+function renderWeek() {
+  const w = weeks.find(x => x.num === currentWeek);
+  const content = document.getElementById('weekContent');
+  const maxKm = 56;
+  const barPct = Math.round((w.km / maxKm) * 100);
+  const barClass = w.tipo === 'taper' ? 'taper' : w.tipo === 'race' ? 'race' : '';
+  const phaseColor = w.tipo === 'pico' ? 'var(--green)' : w.tipo === 'taper' ? 'var(--amber)' : w.tipo === 'race' ? 'var(--red)' : w.tipo === 'desarrollo' ? 'var(--blue)' : 'var(--text3)';
+  const phaseLabel = w.tipo === 'pico' ? '⚡ FASE PICO' : w.tipo === 'taper' ? '↓ TAPERING' : w.tipo === 'race' ? '🏁 SEMANA CARRERA' : w.tipo === 'desarrollo' ? 'DESARROLLO' : 'BASE AERÓBICA';
+  const weekDone = isWeekDone(w.num);
+
+  const daysHtml = w.days.map((d, i) => {
+    const key = `${w.num}-${i}`;
+    const checked = state.checked[key];
+    const typeClass = d.type === 'run' ? 'run' : d.type === 'gym' ? 'gym' : d.type === 'race' ? 'race-day' : 'rest';
+    const iconClass = d.type === 'run' ? 'icon-run' : d.type === 'gym' ? 'icon-gym' : d.type === 'race' ? 'icon-race' : d.type === 'done' ? 'icon-done-day' : 'icon-rest';
+    const isOpen = openDay === i;
+
+    return `
+      <div class="day-card ${typeClass} ${checked ? 'done-card' : ''}" id="daycard-${i}">
+        <div class="day-header" onclick="toggleDay(${i})">
+          <div class="day-icon ${iconClass}">${d.icon}</div>
+          <div class="day-info">
+            <div class="day-name">${d.name}</div>
+            <div class="day-title">${d.title}</div>
+            <div class="day-subtitle">${d.sub}</div>
+          </div>
+          ${d.type !== 'rest' ? `<button class="day-check ${checked ? 'checked' : ''}" onclick="toggleCheck(event, ${i})">✓</button>` : ''}
+          <span class="day-expand ${isOpen ? 'open' : ''}">▾</span>
+        </div>
+        <div class="day-detail ${isOpen ? 'visible' : ''}" id="daydetail-${i}">
+          <div class="detail-grid">
+            <div class="detail-row">
+              <span class="detail-icon-sm">🔥</span>
+              <div class="detail-content">
+                <div class="detail-label-sm">Calentamiento</div>
+                <div class="detail-val-sm">${d.detail.cal}</div>
+              </div>
+            </div>
+            <div class="detail-row">
+              <span class="detail-icon-sm">⚡</span>
+              <div class="detail-content">
+                <div class="detail-label-sm">Ritmo</div>
+                <div class="detail-val-sm">${d.detail.ritmo}</div>
+              </div>
+            </div>
+            <div class="detail-row">
+              <span class="detail-icon-sm">⏸️</span>
+              <div class="detail-content">
+                <div class="detail-label-sm">Recovery</div>
+                <div class="detail-val-sm">${d.detail.rec}</div>
+              </div>
+            </div>
+            <div class="detail-row">
+              <span class="detail-icon-sm">🧊</span>
+              <div class="detail-content">
+                <div class="detail-label-sm">Afloje</div>
+                <div class="detail-val-sm">${d.detail.afloje}</div>
+              </div>
+            </div>
+            <div class="detail-notes">${d.detail.notas}</div>
+          </div>
+        </div>
+      </div>`;
+  }).join('');
+
+  content.innerHTML = `
+    <div class="week-header-bar">
+      <div class="week-meta">
+        <div class="week-phase-tag" style="color:${phaseColor}">${phaseLabel}</div>
+        <div class="week-title-big">Semana ${w.num} — ${w.label}</div>
+        <div class="week-dates">${w.dates}</div>
+      </div>
+      <div class="week-km-badge">
+        <div class="week-km-val">${w.km}</div>
+        <div class="week-km-label">km</div>
+      </div>
+    </div>
+    <div class="vol-bar-row">
+      <div class="vol-bar-wrap"><div class="vol-bar-fill ${barClass}" style="width:${barPct}%"></div></div>
+    </div>
+    <button class="complete-week-btn ${weekDone ? 'completed' : ''}" onclick="toggleWeekDone()">
+      ${weekDone ? '✓ Semana completada' : '○ Marcar semana completa'}
+    </button>
+    <div class="days-list">${daysHtml}</div>
+  `;
+}
+
+function toggleDay(idx) {
+  openDay = openDay === idx ? null : idx;
+  renderWeek();
+}
+
+function toggleCheck(e, idx) {
+  e.stopPropagation();
+  const key = `${currentWeek}-${idx}`;
+  state.checked[key] = !state.checked[key];
+  saveState();
+  updateStats();
+  buildWeekNav();
+  renderWeek();
+  if (state.checked[key]) showToast('¡Entreno completado! 💪🏾');
+}
+
+function toggleWeekDone() {
+  const w = weeks.find(x => x.num === currentWeek);
+  const allDone = isWeekDone(currentWeek);
+  w.days.forEach((_, i) => {
+    state.checked[`${currentWeek}-${i}`] = !allDone;
+  });
+  saveState();
+  updateStats();
+  buildWeekNav();
+  renderWeek();
+  if (!allDone) showToast('¡Semana completada! 🔥');
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+function switchTab(tab, btn) {
+  document.querySelectorAll('.tab-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab' + tab.charAt(0).toUpperCase() + tab.slice(1)).classList.add('active');
+  btn.classList.add('active');
+  if (tab === 'plan') {
+    document.querySelector('.week-nav').style.display = 'block';
+  } else {
+    document.querySelector('.week-nav').style.display = 'none';
+  }
+}
+
+// INIT
+buildWeekNav();
+renderWeek();
+updateStats();
+// scroll to current week
+setTimeout(() => {
+  const btns = document.querySelectorAll('.week-btn');
+  const idx = weeks.findIndex(w => w.num === currentWeek);
+  if (btns[idx]) btns[idx].scrollIntoView({behavior:'instant', block:'nearest', inline:'center'});
+}, 100);
+</script>
+</body>
+</html>
