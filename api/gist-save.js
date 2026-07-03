@@ -62,6 +62,11 @@ async function updateGist(gistId, content) {
 }
 
 module.exports = async (req, res) => {
+  res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+  res.setHeader('Pragma', 'no-cache');
+  res.setHeader('Expires', '0');
+  res.setHeader('Surrogate-Control', 'no-store');
+
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
   if (!GIST_TOKEN) return res.status(500).json({ error: 'Missing GIST_TOKEN' });
 

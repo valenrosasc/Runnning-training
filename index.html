@@ -1042,7 +1042,8 @@ function getRemoteUserKey() {
 
 async function loadRemoteState() {
   try {
-    const r = await fetch(`/api/gist-load?user=${encodeURIComponent(getRemoteUserKey())}`);
+    const url = `/api/gist-load?user=${encodeURIComponent(getRemoteUserKey())}&t=${Date.now()}`;
+    const r = await fetch(url, { cache: 'no-store' });
     if (!r.ok) return null;
     const j = await r.json();
     return j && j.state ? j.state : null;
@@ -1053,13 +1054,15 @@ async function loadRemoteState() {
 
 async function saveRemoteState() {
   try {
-    await fetch('/api/gist-save', {
+    const r = await fetch('/api/gist-save', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
+      cache: 'no-store',
       body: JSON.stringify({ user: getRemoteUserKey(), state })
     });
+    return r.ok;
   } catch (e) {
-    // silent
+    return false;
   }
 }
 
@@ -1240,14 +1243,55 @@ const weeks = [
 ];
 
 // STATE
-let state = JSON.parse(localStorage.getItem('panamaplan') || '{"checked":{},"weekDone":{}}');
+function normalizeState(candidate) {
+  const base = { checked: {}, weekDone: {}, updatedAt: 0 };
+  if (!candidate || typeof candidate !== 'object') return base;
+
+  return {
+    checked: candidate.checked && typeof candidate.checked === 'object' ? candidate.checked : {},
+    weekDone: candidate.weekDone && typeof candidate.weekDone === 'object' ? candidate.weekDone : {},
+    updatedAt: Number(candidate.updatedAt) || 0
+  };
+}
+
+function getStateTimestamp(s) {
+  const explicit = Number(s && s.updatedAt);
+  if (explicit > 0) return explicit;
+
+  if (!s || !s.checked || typeof s.checked !== 'object') return 0;
+  let count = 0;
+  for (const v of Object.values(s.checked)) {
+    if (v) count += 1;
+  }
+  return count;
+}
+
+let state = normalizeState(JSON.parse(localStorage.getItem('panamaplan') || '{"checked":{},"weekDone":{},"updatedAt":0}'));
 let currentWeek = 2;
 let openDay = null;
 
 function saveState() {
+  state.updatedAt = Date.now();
   localStorage.setItem('panamaplan', JSON.stringify(state));
   if (sessionStorage.getItem(AUTH_KEY) === '1') {
     saveRemoteState();
+  }
+}
+
+async function syncStateOnAuth() {
+  const remoteRaw = await loadRemoteState();
+  const remoteState = normalizeState(remoteRaw);
+  const localStamp = getStateTimestamp(state);
+  const remoteStamp = getStateTimestamp(remoteState);
+
+  if (remoteStamp > localStamp) {
+    state = remoteState;
+    localStorage.setItem('panamaplan', JSON.stringify(state));
+    return;
+  }
+
+  if (localStamp > remoteStamp) {
+    await saveRemoteState();
   }
 }
 
@@ -1466,11 +1510,7 @@ async function handleLogin(event) {
   if (user === AUTH_USER && pass === AUTH_PASS) {
     sessionStorage.setItem(AUTH_KEY, '1');
     error.textContent = '';
-    const remoteState = await loadRemoteState();
-    if (remoteState) {
-      state = remoteState;
-      localStorage.setItem('panamaplan', JSON.stringify(state));
-    }
+    await syncStateOnAuth();
     showApp();
     updateStats();
     return;
@@ -1494,11 +1534,7 @@ document.getElementById('loginResetBtn').addEventListener('click', resetLoginFor
 
 (async () => {
   if (sessionStorage.getItem(AUTH_KEY) === '1') {
-    const remoteState = await loadRemoteState();
-    if (remoteState) {
-      state = remoteState;
-      localStorage.setItem('panamaplan', JSON.stringify(state));
-    }
+    await syncStateOnAuth();
     showApp();
   } else {
     lockApp();
