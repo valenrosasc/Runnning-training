@@ -11,10 +11,26 @@ function getHeaders() {
 }
 
 async function findGistByDescription(description) {
-  const r = await fetch(`${GITHUB_API}/gists`, { headers: getHeaders() });
-  if (!r.ok) return null;
-  const gists = await r.json();
-  return gists.find((g) => g.description === description) || null;
+  const matches = [];
+
+  for (let page = 1; page <= 10; page += 1) {
+    const r = await fetch(`${GITHUB_API}/gists?per_page=100&page=${page}`, { headers: getHeaders() });
+    if (!r.ok) {
+      const text = await r.text();
+      throw new Error(`List gists failed: ${text}`);
+    }
+
+    const gists = await r.json();
+    for (const g of gists) {
+      if (g.description === description) matches.push(g);
+    }
+
+    if (!Array.isArray(gists) || gists.length < 100) break;
+  }
+
+  if (matches.length === 0) return null;
+  matches.sort((a, b) => new Date(b.updated_at || 0) - new Date(a.updated_at || 0));
+  return matches[0];
 }
 
 async function createGist(description, content) {

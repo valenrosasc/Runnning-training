@@ -1052,13 +1052,13 @@ async function loadRemoteState() {
   }
 }
 
-async function saveRemoteState() {
+async function saveRemoteState(snapshot = state) {
   try {
     const r = await fetch('/api/gist-save', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       cache: 'no-store',
-      body: JSON.stringify({ user: getRemoteUserKey(), state })
+      body: JSON.stringify({ user: getRemoteUserKey(), state: snapshot })
     });
     return r.ok;
   } catch (e) {
@@ -1269,19 +1269,28 @@ function getStateTimestamp(s) {
 let state = normalizeState(JSON.parse(localStorage.getItem('panamaplan') || '{"checked":{},"weekDone":{},"updatedAt":0}'));
 let currentWeek = 2;
 let openDay = null;
+let remoteSaveQueue = Promise.resolve();
+
+function queueRemoteSave() {
+  if (sessionStorage.getItem(AUTH_KEY) !== '1') return;
+
+  const snapshot = normalizeState(state);
+  remoteSaveQueue = remoteSaveQueue
+    .catch(() => null)
+    .then(() => saveRemoteState(snapshot));
+}
 
 function saveState() {
   state.updatedAt = Date.now();
   localStorage.setItem('panamaplan', JSON.stringify(state));
-  if (sessionStorage.getItem(AUTH_KEY) === '1') {
-    saveRemoteState();
-  }
+  queueRemoteSave();
 }
 
 async function syncStateOnAuth() {
   const remoteRaw = await loadRemoteState();
   const remoteState = normalizeState(remoteRaw);
-  const localStamp = getStateTimestamp(state);
+  const localState = normalizeState(state);
+  const localStamp = getStateTimestamp(localState);
   const remoteStamp = getStateTimestamp(remoteState);
 
   if (remoteStamp > localStamp) {
@@ -1291,7 +1300,7 @@ async function syncStateOnAuth() {
   }
 
   if (localStamp > remoteStamp) {
-    await saveRemoteState();
+    await saveRemoteState(localState);
   }
 }
 
